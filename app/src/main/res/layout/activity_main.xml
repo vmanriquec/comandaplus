@@ -98,7 +98,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:ems="10"
-                            android:hint="Username"
+                            android:hint="Nombre de Usuario"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
                             android:textSize="16dp"
