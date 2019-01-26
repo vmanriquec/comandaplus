@@ -59,7 +59,14 @@
                         android:layout_marginRight="5dp"
                         android:layout_marginBottom="0dp"
                         android:layout_weight="0.86"
-                        android:src="@drawable/user" />
+                        android:src="@drawable/logo2" />
+
+                    <View
+                        android:id="@+id/divider"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_weight="0.86"
+                        android:background="@color/saffron" />
 
                     <TextView
                         android:id="@+id/productoprecio1"
@@ -108,13 +115,23 @@
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
+                    <View
+                        android:id="@+id/divider2"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_weight="0.86"
+                        android:background="@color/saffron" />
+
                     <LinearLayout
                         android:id="@+id/masmenos1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
+                        android:layout_gravity="right|center_horizontal"
+                        android:layout_marginLeft="3dp"
                         android:layout_marginTop="3dp"
-                        android:background="@color/colorPrimaryDark"
+                        android:layout_marginRight="3dp"
+                        android:layout_marginBottom="3dp"
+                        android:background="@color/semiTransparentWhite"
                         android:orientation="horizontal"
                         android:weightSum="2">
 
@@ -123,7 +140,9 @@
                             android:layout_width="36dp"
                             android:layout_height="36dp"
                             android:layout_weight="0.50"
-                            android:text="+" />
+                            android:background="@drawable/tabcirculof"
+                            android:text="+"
+                            android:textSize="24sp" />
 
 
                         <View
@@ -137,7 +156,10 @@
                             android:id="@+id/menos_button1"
                             android:layout_width="36dp"
                             android:layout_height="36dp"
-                            android:text="-" />
+                            android:background="@drawable/circulofondo"
+                            android:text="--"
+                            android:textColor="@color/cardview_light_background"
+                            android:textSize="24sp" />
 
 
                     </LinearLayout>
