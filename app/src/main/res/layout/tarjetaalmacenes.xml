@@ -1,0 +1,166 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent"
+    android:orientation="vertical"
+    android:paddingTop="5dp">
+
+    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/tarjetaalmaceness"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+
+
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        card_view:cardCornerRadius="20dp"
+        card_view:cardElevation="8dp"
+        card_view:cardMaxElevation="10dp"
+        android:layout_alignParentLeft="true">
+
+        <RelativeLayout
+            android:id="@+id/background"
+            android:layout_width="match_parent"
+            android:layout_height="225dp"
+            android:layout_alignParentStart="false"
+            android:layout_alignParentTop="false"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:layout_alignParentLeft="false">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtcardalmacen"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/txtcardalmacen"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:paddingTop="2dp"
+                    android:text="Pedidos Cobrados "
+                    android:textColor="@color/colortextotitulo"
+                    android:layout_alignParentLeft="true" />
+
+                <TextView
+                    android:id="@+id/totalpedidos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/totalentradas"
+                    android:layout_centerVertical="true"
+                    android:gravity="center_horizontal"
+                    android:paddingBottom="2dp"
+                    android:text="TextView"
+                    android:textColor="@color/colorprincipal"
+                    android:textSize="18sp"
+                    android:layout_alignLeft="@+id/totalentradas" />
+
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/totalpedidos"
+                    android:layout_alignParentStart="true"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:text="Ingresos a Caja"
+                    android:textColor="@color/colortextotitulo"
+                    android:layout_alignParentLeft="true" />
+
+                <TextView
+                    android:id="@+id/totalentradas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/textView5"
+                    android:layout_alignEnd="@+id/textView5"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:paddingBottom="2dp"
+                    android:text="TextView"
+                    android:textColor="@color/colorprincipal"
+                    android:textSize="18sp"
+                    android:layout_alignRight="@+id/textView5" />
+
+                <TextView
+                    android:id="@+id/textView10"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/totalsalidas"
+                    android:layout_alignParentStart="true"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:text="Egresos de caja"
+                    android:textColor="@color/colortextotitulo"
+                    android:layout_alignParentLeft="true" />
+
+                <TextView
+                    android:id="@+id/totalsalidas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/textView9"
+                    android:layout_alignParentStart="true"
+                    android:layout_toStartOf="@+id/totalneto"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:paddingBottom="2dp"
+                    android:text="TextView"
+                    android:textColor="@color/colorprincipal"
+                    android:textSize="18sp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_toLeftOf="@+id/totalneto" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txtcardalmacen"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:background="@drawable/controlredondeado"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="TextView"
+                android:textColor="@color/chatmio"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_alignParentLeft="true" />
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"
+                android:background="@drawable/controlredondeado"
+                android:gravity="left|center_vertical|center_horizontal"
+                android:paddingLeft="5dp"
+                android:text="Total Caja"
+                android:textColor="@color/colorAccent"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_alignParentLeft="true" />
+
+            <TextView
+                android:id="@+id/totalneto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignTop="@+id/textView9"
+                android:layout_marginStart="84dp"
+                android:gravity="right|center_vertical"
+                android:text="TextView"
+                android:textColor="@color/cardview_light_background"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="84dp" />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="230dp"
+    android:paddingBottom="8dp"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
+    android:paddingTop="8dp">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardproductos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_alignParentTop="true"
+        android:background="@drawable/bordes"
+        android:paddingBottom="5dp"
+        android:pointerIcon="hand"
+        card_view:cardBackgroundColor="#fff"
+        card_view:cardCornerRadius="20dp"
+        card_view:cardElevation="8dp"
+        card_view:cardMaxElevation="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:weightSum="1">
+
+
+                <ImageView
+                    android:id="@+id/productoimagenp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:src="@drawable/user" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/productonombrep"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:layout_alignTop="@+id/view"
+                        android:layout_centerHorizontal="true"
+                        android:text="fill"
+                        android:textColor="#605f5f"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/productoingredientesp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:text="ingredientes"
+                        android:textSize="11dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/productopreciop"
+                            android:layout_width="50dp"
+                            android:layout_height="wrap_content"
+
+                            android:layout_alignTop="@+id/view"
+
+                            android:text="2"
+                            android:textAlignment="center"
+                            android:textColor="@color/accent"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/stockp"
+                            android:layout_width="10dp"
+                            android:layout_height="wrap_content"
+
+                            android:layout_alignTop="@+id/view"
+
+                            android:layout_weight="1"
+                            android:background="@drawable/botoncajaredondeada"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:text="12.0"
+                            android:textAlignment="center"
+                            android:textColor="@color/colorprincipalamarillo"
+                            android:textColorLink="@color/chatmio"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/idproductop"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.86"
+                        android:textColor="@android:color/transparent"
+                        android:textSize="8sp" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+
+</RelativeLayout>

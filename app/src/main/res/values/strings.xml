@@ -46,7 +46,7 @@
     <string name="common_signin_button_text_long">Sign in with Google</string>
     <string name="library_name">AndHUD</string>
     <string name="fcm_fallback_notification_channel_label">Miscellaneous</string>
-    <string name="app_name">TK.CustomMap.NetStandard20.Android</string>
+
     <string name="mr_button_content_description">Cast button</string>
     <string name="mr_cast_button_connected">Cast button. Connected</string>
     <string name="mr_cast_button_connecting">Cast button. Connecting</string>

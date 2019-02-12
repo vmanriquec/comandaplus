@@ -56,10 +56,10 @@
     <color name="place_autocomplete_search_hint">#ffbdbdbd</color>
     <color name="place_autocomplete_search_text">#ff212121</color>
     <color name="place_autocomplete_separator">#1f000000</color>
-    <color name="common_google_signin_btn_text_dark_default">@android:color/white</color>
+
     <color name="common_google_signin_btn_text_dark_disabled">#1f000000</color>
     <color name="common_google_signin_btn_text_dark_focused">@android:color/black</color>
-    <color name="common_google_signin_btn_text_dark_pressed">@android:color/white</color>
+
     <color name="common_google_signin_btn_text_light_default">#90000000</color>
     <color name="common_google_signin_btn_text_light_disabled">#1f000000</color>
     <color name="common_google_signin_btn_text_light_focused">#90000000</color>
@@ -76,14 +76,14 @@
     <color name="accent_material_dark">@color/material_deep_teal_200</color>
     <color name="accent_material_light">@color/material_deep_teal_500</color>
     <color name="background_floating_material_dark">@color/material_grey_800</color>
-    <color name="background_floating_material_light">@android:color/white</color>
+
     <color name="background_material_dark">@color/material_grey_850</color>
     <color name="background_material_light">@color/material_grey_50</color>
     <color name="bright_foreground_disabled_material_dark">#80ffffff</color>
     <color name="bright_foreground_disabled_material_light">#80000000</color>
     <color name="bright_foreground_inverse_material_dark">@color/bright_foreground_material_light</color>
     <color name="bright_foreground_inverse_material_light">@color/bright_foreground_material_dark</color>
-    <color name="bright_foreground_material_dark">@android:color/white</color>
+
     <color name="bright_foreground_material_light">@android:color/black</color>
     <color name="button_material_dark">#ff5a595b</color>
     <color name="button_material_light">#ffd6d7d7</color>
@@ -91,7 +91,7 @@
     <color name="dim_foreground_disabled_material_light">#80323232</color>
     <color name="dim_foreground_material_dark">#ffbebebe</color>
     <color name="dim_foreground_material_light">#ff323232</color>
-    <color name="foreground_material_dark">@android:color/white</color>
+
     <color name="foreground_material_light">@android:color/black</color>
     <color name="highlighted_text_material_dark">#6680cbc4</color>
     <color name="highlighted_text_material_light">#66009688</color>
