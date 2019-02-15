@@ -2,6 +2,7 @@ package com.example.comandaplus;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.EditText;
@@ -42,9 +43,18 @@ public  static final String PATH_MESSAGE="message";
     }
 
     private void ir() {
-        Intent i = new Intent(this, Listaproductos.class);
 
-        startActivity(i);
+
+        boolean FragmentTransaction=false;
+        Fragment fragment=null;
+
+            fragment = new Listaproductos();
+            FragmentTransaction=true;
+
+
+//            Intent i = new Intent(this, Listaproductos.class);
+
+      startActivity(i);
 
     }
 

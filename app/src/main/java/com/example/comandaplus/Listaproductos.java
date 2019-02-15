@@ -1,10 +1,11 @@
 package com.example.comandaplus;
+
+
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,10 +17,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.Toast;
+
+import com.example.comandaplus.adapter.Adaptadormaestraproducto;
+import com.example.comandaplus.modelo.Productos;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -32,11 +36,13 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
-import com.example.comandaplus.adapter.Adaptadormaestraproducto;
-import com.example.comandaplus.modelo.Productos;
 import static android.content.Context.MODE_PRIVATE;
 
-public class Listaproductos  extends  AppCompatActivity implements   View.OnClickListener, RecyclerView.OnItemTouchListener {
+
+public class Listaproductos extends Fragment implements   View.OnClickListener,RecyclerView.OnItemTouchListener {
+    public static final int CONNECTION_TIMEOUT = 10000;
+    public static final int READ_TIMEOUT = 15000;
+
     private View view;
     private RecyclerView recycler;
     private RecyclerView.Adapter adapter;
@@ -44,19 +50,17 @@ public class Listaproductos  extends  AppCompatActivity implements   View.OnClic
     ArrayList<Productos> people=new ArrayList<>();
     private String[] strArrData = {"No Suggestions"};
 
-    public static final int CONNECTION_TIMEOUT = 10000;
-    public static final int READ_TIMEOUT = 15000;
 
     ArrayList<String> mylist = new ArrayList<String>();
     SharedPreferences prefs;
     String face, FileName ="myfile" ,nombre,almacenactivosf,claveusuario,idalmacensf,idalmacenactivo,almacenactivo;
-
-
+    ;
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.layoutmaestrasproduc, container, false);
 
-        prefs =this.getSharedPreferences(FileName, MODE_PRIVATE);
+        prefs = getActivity().getSharedPreferences(FileName, MODE_PRIVATE);
         face=prefs.getString("facebook","");
 
         MultiAutoCompleteTextView myMultiAutoCompleteTextView
@@ -67,8 +71,10 @@ public class Listaproductos  extends  AppCompatActivity implements   View.OnClic
 
         int numberOfColumns = 6;
         recycler.setHasFixedSize(true);
-        lManager = new LinearLayoutManager(this);
+        lManager = new LinearLayoutManager(getActivity());
         recycler.setLayoutManager(lManager);
+        new llenarautocomplete().execute("1");
+        new traerproductosporidalmacenidfamilia().execute("1");
 
         myMultiAutoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -82,29 +88,6 @@ public class Listaproductos  extends  AppCompatActivity implements   View.OnClic
             }
         });
 
-        if (face.equals("si")){
-
-            nombre = prefs.getString("sessionnombre", "");
-            almacenactivo = prefs.getString("almacenactivo", "");
-            idalmacenactivo = prefs.getString("idalmacenactivo", "");
-
-            new llenarautocomplete().execute(idalmacenactivo);
-            new traerproductosporidalmacenidfamilia().execute("1");
-
-
-
-        }else if(face.equals("no")){
-            nombre = prefs.getString("nombreusuario", "");
-            almacenactivosf = prefs.getString("almacenactivosf", "");
-            claveusuario=prefs.getString("claveusuario","");
-            idalmacensf=prefs.getString("idalmacenactivosf","");
-
-            // Toast.makeText(HomeFragment.this.getActivity(),"login normal"+nombre+almacenactivosf+claveusuario+idalmacensf,Toast.LENGTH_LONG).show();
-
-
-
-
-        }
 
 
         return view;
@@ -226,7 +209,7 @@ public class Listaproductos  extends  AppCompatActivity implements   View.OnClic
             ArrayList<String> dataList = new ArrayList<String>();
             Productos meso;
             if(result.equals("no rows")) {
-                Toast.makeText(getApplicationContext(),"no existen datos a mostrar",Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(),"no existen datos a mostrar",Toast.LENGTH_LONG).show();
 
             }else{
 
@@ -246,8 +229,8 @@ public class Listaproductos  extends  AppCompatActivity implements   View.OnClic
                     strArrData = dataList.toArray(new String[dataList.size()]);
 
 
-                    adapter = new Adaptadormaestraproducto(people,getApplicationContext());
-                    recycler.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
+                    adapter = new Adaptadormaestraproducto(people,getActivity().getApplicationContext());
+                    recycler.setLayoutManager(new GridLayoutManager(getActivity(), 2));
 
                     recycler.setAdapter(adapter);
 
@@ -360,7 +343,7 @@ public class Listaproductos  extends  AppCompatActivity implements   View.OnClic
             ArrayList<String> dataList = new ArrayList<String>();
             Productos meso;
             if(result.equals("no rows")) {
-                Toast.makeText(getApplicationContext(),"no existen datos a mostrar",Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(),"no existen datos a mostrar",Toast.LENGTH_LONG).show();
 
             }else{
 
@@ -386,7 +369,7 @@ public class Listaproductos  extends  AppCompatActivity implements   View.OnClic
                             = (MultiAutoCompleteTextView)view.findViewById(
                             R.id.multiAutoCompleteTextView);
                     myMultiAutoCompleteTextView.setAdapter(
-                            new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_dropdown_item_1line,mylist));
+                            new ArrayAdapter<String>(getActivity(),android.R.layout.simple_dropdown_item_1line,mylist));
                     myMultiAutoCompleteTextView.setTokenizer(
                             new MultiAutoCompleteTextView.CommaTokenizer());
 
@@ -500,7 +483,7 @@ public class Listaproductos  extends  AppCompatActivity implements   View.OnClic
             ArrayList<String> dataList = new ArrayList<String>();
             Productos meso;
             if(result.equals("no rows")) {
-                Toast.makeText(getApplicationContext(),"no existen datos a mostrar",Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(),"no existen datos a mostrar",Toast.LENGTH_LONG).show();
 
             }else{
                 try {
@@ -512,8 +495,8 @@ public class Listaproductos  extends  AppCompatActivity implements   View.OnClic
                     }
                     strArrData = dataList.toArray(new String[dataList.size()]);
                     recycler.removeAllViews();recycler.setAdapter(null);
-                    adapter = new Adaptadormaestraproducto(people,getApplication().getApplicationContext());
-                    recycler.setLayoutManager(new GridLayoutManager(getApplicationContext(), 1));
+                    adapter = new Adaptadormaestraproducto(people,getActivity());
+                    recycler.setLayoutManager(new GridLayoutManager(getActivity(), 1));
                     recycler.setAdapter(adapter);
                 } catch (JSONException e) {
 
@@ -522,4 +505,3 @@ public class Listaproductos  extends  AppCompatActivity implements   View.OnClic
         }
     }
 }
-

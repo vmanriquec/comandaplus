@@ -144,9 +144,9 @@
     <color name="primary_dark">#ff222222</color>
     <color name="primary_light">#ffffccbc</color>
     <color name="accent">#ffff5722</color>
-    <color name="primary_text">#ff212121</color>
+    <color name="primary_text">#000000</color>
     <color name="secondary_text">#ff757575</color>
-    <color name="icons">#ffffffff</color>
+    <color name="icons">#FEFEFE</color>
     <color name="divider">#ffbdbdbd</color>
 
     <color name="custom_theme_color">#fffe7f00</color>
