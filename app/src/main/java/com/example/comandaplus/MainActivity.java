@@ -45,14 +45,9 @@ public  static final String PATH_MESSAGE="message";
     private void ir() {
 
 
-        boolean FragmentTransaction=false;
-        Fragment fragment=null;
-
-            fragment = new Listaproductos();
-            FragmentTransaction=true;
 
 
-//            Intent i = new Intent(this, Listaproductos.class);
+           Intent i = new Intent(this, Listaproductos.class);
 
       startActivity(i);
 

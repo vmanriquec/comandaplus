@@ -1,6 +1,7 @@
 package com.example.comandaplus;
 
 
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -36,14 +37,16 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
+import butterknife.ButterKnife;
+
 import static android.content.Context.MODE_PRIVATE;
 
 
-public class Listaproductos extends Fragment implements   View.OnClickListener,RecyclerView.OnItemTouchListener {
+public class Listaproductos extends Activity  implements   RecyclerView.OnItemTouchListener {
     public static final int CONNECTION_TIMEOUT = 10000;
     public static final int READ_TIMEOUT = 15000;
 
-    private View view;
+
     private RecyclerView recycler;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager lManager;
@@ -54,24 +57,31 @@ public class Listaproductos extends Fragment implements   View.OnClickListener,R
     ArrayList<String> mylist = new ArrayList<String>();
     SharedPreferences prefs;
     String face, FileName ="myfile" ,nombre,almacenactivosf,claveusuario,idalmacensf,idalmacenactivo,almacenactivo;
-    ;
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-        view = inflater.inflate(R.layout.layoutmaestrasproduc, container, false);
+        setContentView(R.layout.layoutmaestrasproduc);
+        ButterKnife.bind(this);
 
-        prefs = getActivity().getSharedPreferences(FileName, MODE_PRIVATE);
+
+
+
+
+
+
+
+
+        prefs = this.getSharedPreferences(FileName, MODE_PRIVATE);
         face=prefs.getString("facebook","");
 
-        MultiAutoCompleteTextView myMultiAutoCompleteTextView
-                = (MultiAutoCompleteTextView)view.findViewById(
-                R.id.multiAutoCompleteTextView);
+        MultiAutoCompleteTextView myMultiAutoCompleteTextView= (MultiAutoCompleteTextView) findViewById(R.id.multiAutoCompleteTextView);
 // Obtener el Recycler PRODUCTOS
-        recycler = (RecyclerView) view.findViewById(R.id.maestraproductos);
+        recycler = (RecyclerView) findViewById(R.id.maestraproductos);
 
         int numberOfColumns = 6;
         recycler.setHasFixedSize(true);
-        lManager = new LinearLayoutManager(getActivity());
+        lManager = new LinearLayoutManager(this);
         recycler.setLayoutManager(lManager);
         new llenarautocomplete().execute("1");
         new traerproductosporidalmacenidfamilia().execute("1");
@@ -88,9 +98,6 @@ public class Listaproductos extends Fragment implements   View.OnClickListener,R
             }
         });
 
-
-
-        return view;
     }
     @Override
     public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
@@ -107,10 +114,7 @@ public class Listaproductos extends Fragment implements   View.OnClickListener,R
 
     }
 
-    @Override
-    public void onClick(View v) {
 
-    }
     private class traerproductosporidalmacenidfamilia extends AsyncTask<String, String, String> {
 
         HttpURLConnection conne;
@@ -209,7 +213,7 @@ public class Listaproductos extends Fragment implements   View.OnClickListener,R
             ArrayList<String> dataList = new ArrayList<String>();
             Productos meso;
             if(result.equals("no rows")) {
-                Toast.makeText(getActivity(),"no existen datos a mostrar",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"no existen datos a mostrar",Toast.LENGTH_LONG).show();
 
             }else{
 
@@ -229,8 +233,8 @@ public class Listaproductos extends Fragment implements   View.OnClickListener,R
                     strArrData = dataList.toArray(new String[dataList.size()]);
 
 
-                    adapter = new Adaptadormaestraproducto(people,getActivity().getApplicationContext());
-                    recycler.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+                    adapter = new Adaptadormaestraproducto(people,getApplicationContext());
+                    recycler.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
 
                     recycler.setAdapter(adapter);
 
@@ -343,7 +347,7 @@ public class Listaproductos extends Fragment implements   View.OnClickListener,R
             ArrayList<String> dataList = new ArrayList<String>();
             Productos meso;
             if(result.equals("no rows")) {
-                Toast.makeText(getActivity(),"no existen datos a mostrar",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"no existen datos a mostrar",Toast.LENGTH_LONG).show();
 
             }else{
 
@@ -366,10 +370,10 @@ public class Listaproductos extends Fragment implements   View.OnClickListener,R
 
 
                     MultiAutoCompleteTextView myMultiAutoCompleteTextView
-                            = (MultiAutoCompleteTextView)view.findViewById(
+                            = (MultiAutoCompleteTextView) findViewById(
                             R.id.multiAutoCompleteTextView);
                     myMultiAutoCompleteTextView.setAdapter(
-                            new ArrayAdapter<String>(getActivity(),android.R.layout.simple_dropdown_item_1line,mylist));
+                            new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_dropdown_item_1line,mylist));
                     myMultiAutoCompleteTextView.setTokenizer(
                             new MultiAutoCompleteTextView.CommaTokenizer());
 
@@ -483,7 +487,7 @@ public class Listaproductos extends Fragment implements   View.OnClickListener,R
             ArrayList<String> dataList = new ArrayList<String>();
             Productos meso;
             if(result.equals("no rows")) {
-                Toast.makeText(getActivity(),"no existen datos a mostrar",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"no existen datos a mostrar",Toast.LENGTH_LONG).show();
 
             }else{
                 try {
@@ -495,8 +499,8 @@ public class Listaproductos extends Fragment implements   View.OnClickListener,R
                     }
                     strArrData = dataList.toArray(new String[dataList.size()]);
                     recycler.removeAllViews();recycler.setAdapter(null);
-                    adapter = new Adaptadormaestraproducto(people,getActivity());
-                    recycler.setLayoutManager(new GridLayoutManager(getActivity(), 1));
+                    adapter = new Adaptadormaestraproducto(people,getApplicationContext());
+                    recycler.setLayoutManager(new GridLayoutManager(getApplicationContext(), 1));
                     recycler.setAdapter(adapter);
                 } catch (JSONException e) {
 

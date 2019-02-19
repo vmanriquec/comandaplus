@@ -36,7 +36,7 @@ public class Adaptadormaestraproducto extends RecyclerView.Adapter<Adaptadormaes
     private List<Productos> items;
     ArrayList<Detallepedido> detallepedido=new ArrayList<>();
     Detallepedido objdetallepedido;
-    Realm realm = Realm.getDefaultInstance();
+
     public Adaptadormaestraproducto(List<Productos> items, Context contexto){
         this.mainContext=contexto;
         this.items=items;
@@ -137,7 +137,7 @@ public class Adaptadormaestraproducto extends RecyclerView.Adapter<Adaptadormaes
 
         prefs = mainContext.getApplicationContext().getSharedPreferences(FileName, Context.MODE_PRIVATE);
         String idalmacenactiv = prefs.getString("idalmacenactivo", "");
-        int i= Integer.parseInt(idalmacenactiv);
+        int i= Integer.parseInt("1");
 
 
 

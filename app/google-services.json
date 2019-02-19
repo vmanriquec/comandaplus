@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "983844061190",
+    "firebase_url": "https://premiun-1ca45.firebaseio.com",
+    "project_id": "premiun-1ca45",
+    "storage_bucket": "premiun-1ca45.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:983844061190:android:9d3e3a4fe2ca88d5",
+        "android_client_info": {
+          "package_name": "com.example.comandaplus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "983844061190-gndni8fq5kpaen8qs1s8f06gof3jratn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.comandaplus",
+            "certificate_hash": "416246f5b4764ed2c1d9fe49659254cc321d22b9"
+          }
+        },
+        {
+          "client_id": "983844061190-c2mbr4257onbsuj2lg3t62fvbv9tdf8o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuY0We4sHDAyDfigrpLQiwOB_ykYwa50U"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "983844061190-c2mbr4257onbsuj2lg3t62fvbv9tdf8o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
