@@ -6,9 +6,7 @@
     android:layout_height="match_parent">
 
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:configChanges="orientation"
@@ -17,49 +15,50 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="178dp"
+            android:layout_height="wrap_content"
 
             android:layout_weight="0.47">
 
-            <RelativeLayout
-                android:id="@+id/background"
-                android:layout_width="145dp"
-                android:layout_height="68dp"
-                android:layout_alignStart="@+id/overlapImage"
-                android:layout_alignLeft="@+id/overlapImage"
-                android:layout_alignParentBottom="true"
-                android:layout_marginStart="150dp"
-                android:layout_marginLeft="150dp"
-                android:layout_marginBottom="86dp"
-                android:background="@color/semiTransparentWhite"
-                android:paddingRight="15dp">
-
-            </RelativeLayout>
-
             <ImageView
                 android:id="@+id/overlapImage"
-                android:layout_width="70dp"
-                android:layout_height="59dp"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginStart="337dp"
-                android:layout_marginLeft="337dp"
+                android:layout_marginStart="333dp"
+                android:layout_marginLeft="333dp"
 
-                android:layout_marginTop="9dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginRight="9dp"
+                android:layout_marginBottom="3dp"
                 android:adjustViewBounds="true"
                 android:background="@drawable/cestavacia" />
 
+            <MultiAutoCompleteTextView
+                android:id="@+id/multiAutoCompleteTextView"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:hint="Buscar"
+
+                android:maxLines="1"
+                android:textColor="@color/colorprincipal"
+                android:textColorHint="@android:color/background_light"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/txtenviar"
-                android:layout_width="31dp"
-                android:layout_height="34dp"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
                 android:layout_alignParentTop="true"
 
                 android:layout_centerInParent="true"
                 android:layout_marginStart="-29dp"
                 android:layout_marginLeft="-29dp"
                 android:layout_marginTop="17dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
                 android:layout_toEndOf="@+id/overlapImage"
                 android:layout_toRightOf="@+id/overlapImage"
                 android:background="@drawable/tabcirculoverdecara"
@@ -78,22 +77,12 @@
             -->
 
 
-        <MultiAutoCompleteTextView
-            android:id="@+id/multiAutoCompleteTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Buscar"
-
-            android:textColor="@color/colorprincipal"
-            android:textColorHint="@android:color/background_light"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
         <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/maestraproductos"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="1dp"
+            android:background="@drawable/radial_gradient_bkg"
             android:scrollbars="vertical">
 
         </android.support.v7.widget.RecyclerView>

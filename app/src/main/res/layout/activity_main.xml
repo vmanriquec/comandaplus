@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    >
 
     <!-- Login progress -->
     <ProgressBar
@@ -26,16 +27,17 @@
             android:id="@+id/email_login_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_gravity="center_vertical">
 
-            <TextView
+            <ImageView
+                android:id="@+id/imageView"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Sodapop"
-                android:textColor="#fff"
-                android:textSize="40dp"
-                android:gravity="center_vertical|center_horizontal" />
+                android:gravity="center_vertical|center_horizontal"
+                app:srcCompat="@drawable/logosinfondo" />
+
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -60,7 +62,7 @@
                         <ImageView
                             android:layout_width="40dp"
                             android:layout_height="40dp"
-                            android:src="@drawable/user"
+                            android:src="@drawable/usercomanda"
                             android:scaleType="fitCenter" />
                     </LinearLayout>
 
@@ -76,9 +78,9 @@
                         android:layout_height="60dp"
                         android:gravity="center_vertical|center_horizontal">
                         <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:src="@drawable/password"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:src="@drawable/passwordfinal"
                             android:scaleType="fitCenter" />
                     </LinearLayout>
                 </LinearLayout>
@@ -159,15 +161,16 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Forgot your login details ?"
+                    android:text="Peru -"
                     android:textColor="#80ffffff"
                     android:textSize="12dp" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Get help signing in."
-                    android:textColor="#ffffff"
                     android:paddingLeft="5dp"
+                    android:text="Huaral "
+                    android:textColor="#ffffff"
                     android:textSize="12dp" />
             </LinearLayout>
 

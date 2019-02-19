@@ -2,6 +2,18 @@
 <resources>
 
 
+
+    <color name="coloruno"> #22150F</color>
+    <color name="colordos">#FFDA02</color>
+    <color name="colortres">#FEFEFE</color>
+    <color name="colorcuatro">#A8846D</color>
+    <color name="colorcinco">    #DA9966</color>
+    <color name="colorseis"> #D5B6B9</color>
+    <color name="colorsiete">#E6D7D5</color>
+    <color name="colorocho"> #F6D79C</color>
+
+
+
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#d03a26</color>

@@ -15,7 +15,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import com.example.comandaplus.R;
 import com.example.comandaplus.modelo.Detallepedido;
 import com.example.comandaplus.modelo.Productos;
@@ -24,75 +23,89 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.realm.Realm;
+import butterknife.BindView;
+import butterknife.OnClick;
 import jp.wasabeef.picasso.transformations.CropSquareTransformation;
 
 
 public class Adaptadormaestraproducto extends RecyclerView.Adapter<Adaptadormaestraproducto.AdaptadorViewHolder> {
+    @BindView(R.id.plus_button1)
+    Button plusButton1;
+    @BindView(R.id.menos_button1)
+    Button menosButton1;
+
     private Context mainContext;
     String foto;
     SharedPreferences prefs;
-    String FileName ="myfile";
+    String FileName = "myfile";
     private List<Productos> items;
-    ArrayList<Detallepedido> detallepedido=new ArrayList<>();
+    ArrayList<Detallepedido> detallepedido = new ArrayList<>();
     Detallepedido objdetallepedido;
 
-    public Adaptadormaestraproducto(List<Productos> items, Context contexto){
-        this.mainContext=contexto;
-        this.items=items;
+    public Adaptadormaestraproducto(List<Productos> items, Context contexto) {
+        this.mainContext = contexto;
+        this.items = items;
         prefs = contexto.getApplicationContext().getSharedPreferences(FileName, Context.MODE_PRIVATE);
         String idalmacenactiv = prefs.getString("idalmacenactivo", "");
 
 
     }
-    static class AdaptadorViewHolder extends RecyclerView.ViewHolder{
+
+
+    static class AdaptadorViewHolder extends RecyclerView.ViewHolder {
         protected TextView productonombre;
         protected TextView idproducto;
         protected TextView productoprecio;
-        protected TextView productoingredientes,stockp;
+        protected TextView productoingredientes, stockp;
         protected ImageView productoimagen;
         protected TextView cantidadpedida;
+        protected TextView cantidadtarjeta;
         protected CheckBox michek;
         protected LinearLayout masmenos;
-        protected Button mas,botonok;
+        protected Button mas,meno, botonok;
         protected Button menos;
 
-        public AdaptadorViewHolder(View v){
+        public AdaptadorViewHolder(View v) {
             super(v);
-            this.productonombre=(TextView) v.findViewById(R.id.productonombrep);
-            this.productoprecio=(TextView) v.findViewById(R.id.productopreciop);
-            this.idproducto=(TextView) v.findViewById(R.id.idproductop);
-            this.cantidadpedida=(TextView) v.findViewById(R.id.contidadpedida);
-            this.productoingredientes=(TextView) v.findViewById(R.id.productoingredientesp);
-            this.productoimagen=(ImageView) v.findViewById(R.id.productoimagenp);
-            this.stockp=(TextView) v.findViewById(R.id.stockp);
-
+            this.productonombre = (TextView) v.findViewById(R.id.productonombrep);
+            this.productoprecio = (TextView) v.findViewById(R.id.productopreciop);
+            this.idproducto = (TextView) v.findViewById(R.id.idproductop);
+            this.cantidadpedida = (TextView) v.findViewById(R.id.contidadpedida);
+            this.productoingredientes = (TextView) v.findViewById(R.id.productoingredientesp);
+            this.productoimagen = (ImageView) v.findViewById(R.id.productoimagenp);
+            this.stockp = (TextView) v.findViewById(R.id.stockp);
+            this.mas = (Button) v.findViewById(R.id.menos_button1);
+            this.meno = (Button) v.findViewById(R.id.plus_button1);
+this.cantidadtarjeta=(TextView) v.findViewById(R.id.cantidadtarjeta);
         }
     }
+
     @Override
-    public Adaptadormaestraproducto.AdaptadorViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        View v= LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.tarjetamaestraprod,viewGroup,false);
-        return new Adaptadormaestraproducto.AdaptadorViewHolder(v);
+    public AdaptadorViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+        View v = LayoutInflater.from(viewGroup.getContext())
+                .inflate(R.layout.tarjetaproducto, viewGroup, false);
+        return new AdaptadorViewHolder(v);
     }
+
     @Override
-    public void onBindViewHolder(final Adaptadormaestraproducto.AdaptadorViewHolder viewHolder, final int position) {
+    public void onBindViewHolder(final AdaptadorViewHolder viewHolder, final int position) {
         final Productos item = items.get(position);
         viewHolder.itemView.setTag(item);
         viewHolder.productonombre.setText(item.getNombreproducto());
         viewHolder.productoingredientes.setText(item.getIngredientes());
-        viewHolder.productoprecio.setText("S/. "+ String.valueOf(item.getPrecventa()));
+        viewHolder.productoprecio.setText("S/. " + String.valueOf(item.getPrecventa()));
         viewHolder.idproducto.setText(String.valueOf(item.getIdproducto()));
-        viewHolder.stockp.setText("Stock: "+ String.valueOf(item.getEstadoproducto()));
+
+        // aqui traigo el stock  viewHolder.stockp.setText("Stock: "+ String.valueOf(item.getEstadoproducto()));
 
         //viewHolder.michek.setVisibility(View.GONE);
         //viewHolder.cantidadpedida.setVisibility(View.GONE);
 
-/*asignar imagen desde url*/
-        foto=item.getDescripcion().toString();
+        /*asignar imagen desde url*/
+        foto = item.getDescripcion().toString();
 
-        Picasso.with(mainContext.getApplicationContext()) .load(foto).transform(new CropSquareTransformation()).resize(200, 200)
-                .into( viewHolder.productoimagen);
+        Picasso.with(mainContext.getApplicationContext()).load(foto).transform(new CropSquareTransformation()).resize(200, 200)
+                .into(viewHolder.productoimagen);
 
         viewHolder.productoimagen.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,11 +118,11 @@ public class Adaptadormaestraproducto extends RecyclerView.Adapter<Adaptadormaes
 
                 ImageView image = new ImageView(mainContext.getApplicationContext());
                 TextView text = new TextView(mainContext.getApplicationContext());
-                foto=item.getDescripcion().toString();
+                foto = item.getDescripcion().toString();
 
-                Picasso.with(mainContext.getApplicationContext()) .load(foto).transform(new CropSquareTransformation())
+                Picasso.with(mainContext.getApplicationContext()).load(foto).transform(new CropSquareTransformation())
                         .resize(350, 350)
-                        .into( image);
+                        .into(image);
                 text.setText(item.getIngredientes());
                 text.setTextColor(Color.RED);
                 text.setBackgroundColor(Color.WHITE);
@@ -117,13 +130,12 @@ public class Adaptadormaestraproducto extends RecyclerView.Adapter<Adaptadormaes
                 toastLayout.addView(image);
                 toastLayout.addView(text);
                 ImageToast.setView(toastLayout);
-                ImageToast.setGravity (Gravity.TOP | Gravity.LEFT, 40, 40);
+                ImageToast.setGravity(Gravity.TOP | Gravity.LEFT, 140, 140);
                 ImageToast.setDuration(Toast.LENGTH_LONG);
                 ImageToast.show();
 
 
-                ImageToast.getView().setPadding( 20, 100, 20, 20);
-
+                ImageToast.getView().setPadding(20, 100, 20, 20);
 
 
             }
@@ -131,18 +143,76 @@ public class Adaptadormaestraproducto extends RecyclerView.Adapter<Adaptadormaes
 
 
 
-        /*si esta check activo para aumentar cantidad*/
 
+
+        /*si esta check activo para aumentar cantidad*/
 
 
         prefs = mainContext.getApplicationContext().getSharedPreferences(FileName, Context.MODE_PRIVATE);
         String idalmacenactiv = prefs.getString("idalmacenactivo", "");
-        int i= Integer.parseInt("1");
+        int i = Integer.parseInt("1");
 
 
 
+
+
+
+        viewHolder.meno.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                int c= Integer.parseInt(viewHolder.cantidadpedida.getText().toString());
+                c=c+1;
+                viewHolder.cantidadpedida.setText(Integer.toString(c));
+
+
+
+
+                double cc= Double.parseDouble(viewHolder.cantidadtarjeta.getText().toString());
+
+
+
+
+
+                viewHolder.cantidadtarjeta.setText(Double.toString(cc+item.getPrecventa()));
+
+
+
+            }
+        });
+
+
+        viewHolder.mas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                int d= Integer.parseInt(viewHolder.cantidadpedida.getText().toString());
+                if (d==0) {
+
+
+                }else{
+                    d=d-1;
+
+                    viewHolder.cantidadpedida.setText(Integer.toString(d));
+
+                    double cc= Double.parseDouble(viewHolder.cantidadtarjeta.getText().toString());
+
+
+
+
+
+                    viewHolder.cantidadtarjeta.setText(Double.toString(cc-item.getPrecventa()));
+
+
+
+                }
+
+            }
+        });
 
     }
+
     @Override
     public int getItemCount() {
         return items.size();
