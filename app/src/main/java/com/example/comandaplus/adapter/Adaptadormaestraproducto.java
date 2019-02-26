@@ -1,8 +1,10 @@
 package com.example.comandaplus.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -15,7 +17,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.comandaplus.CarDb;
 import com.example.comandaplus.R;
+import com.example.comandaplus.Realm.Detallepedidorealm;
 import com.example.comandaplus.modelo.Detallepedido;
 import com.example.comandaplus.modelo.Productos;
 import com.squareup.picasso.Picasso;
@@ -25,6 +29,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.realm.Realm;
+import io.realm.RealmResults;
 import jp.wasabeef.picasso.transformations.CropSquareTransformation;
 
 
@@ -33,7 +39,7 @@ public class Adaptadormaestraproducto extends RecyclerView.Adapter<Adaptadormaes
     Button plusButton1;
     @BindView(R.id.menos_button1)
     Button menosButton1;
-
+    //Realm realm = Realm.getDefaultInstance();
     private Context mainContext;
     String foto;
     SharedPreferences prefs;
@@ -70,13 +76,15 @@ public class Adaptadormaestraproducto extends RecyclerView.Adapter<Adaptadormaes
             this.productonombre = (TextView) v.findViewById(R.id.productonombrep);
             this.productoprecio = (TextView) v.findViewById(R.id.productopreciop);
             this.idproducto = (TextView) v.findViewById(R.id.idproductop);
-            this.cantidadpedida = (TextView) v.findViewById(R.id.contidadpedida);
+            this.cantidadpedida = (TextView) v.findViewById(R.id.cantidadpedida);
             this.productoingredientes = (TextView) v.findViewById(R.id.productoingredientesp);
             this.productoimagen = (ImageView) v.findViewById(R.id.productoimagenp);
             this.stockp = (TextView) v.findViewById(R.id.stockp);
             this.mas = (Button) v.findViewById(R.id.menos_button1);
             this.meno = (Button) v.findViewById(R.id.plus_button1);
 this.cantidadtarjeta=(TextView) v.findViewById(R.id.cantidadtarjeta);
+
+
         }
     }
 
@@ -140,14 +148,7 @@ this.cantidadtarjeta=(TextView) v.findViewById(R.id.cantidadtarjeta);
 
             }
         });
-
-
-
-
-
         /*si esta check activo para aumentar cantidad*/
-
-
         prefs = mainContext.getApplicationContext().getSharedPreferences(FileName, Context.MODE_PRIVATE);
         String idalmacenactiv = prefs.getString("idalmacenactivo", "");
         int i = Integer.parseInt("1");
@@ -156,36 +157,48 @@ this.cantidadtarjeta=(TextView) v.findViewById(R.id.cantidadtarjeta);
 
 
 
-
         viewHolder.meno.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 int c= Integer.parseInt(viewHolder.cantidadpedida.getText().toString());
                 c=c+1;
+
                 viewHolder.cantidadpedida.setText(Integer.toString(c));
-
-
-
-
                 double cc= Double.parseDouble(viewHolder.cantidadtarjeta.getText().toString());
-
-
-
-
-
                 viewHolder.cantidadtarjeta.setText(Double.toString(cc+item.getPrecventa()));
+                int idp=Integer.parseInt(viewHolder.idproducto.getText().toString());
+
+                Intent intent = new Intent("custom-message");
+                //            intent.putExtra("quantity",Integer.parseInt(quantity.getText().toString()));
+                intent.putExtra("mas",Double.toString(cc+item.getPrecventa()));
+
+                LocalBroadcastManager.getInstance(mainContext).sendBroadcast(intent);
 
 
+                // if (verificarsiexiste(idp)){
+                    //   Toast.makeText(getApplicationContext(),idp,Toast.LENGTH_SHORT).show();
+                   // realmgrbarenbasedatosa(idp,t,cantped,pr,idp,foto);
 
+
+                //}else{
+                  //  realmgrbarenbasedatosdetalle( idp, idp,c,item.getPrecventa(),item.getNombreproducto(),1);
+
+                //}
             }
         });
+
+
+
+
+
+
 
 
         viewHolder.mas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
 
                 int d= Integer.parseInt(viewHolder.cantidadpedida.getText().toString());
                 if (d==0) {
@@ -200,16 +213,54 @@ this.cantidadtarjeta=(TextView) v.findViewById(R.id.cantidadtarjeta);
 
 
 
+                   // TextView f= (TextView) mainContext.getApplicationContext. (R.id.totalsoles);
+                    //f.setText(viewHolder.cantidadtarjeta.getText());
+
+
+
 
 
                     viewHolder.cantidadtarjeta.setText(Double.toString(cc-item.getPrecventa()));
 
+                    Intent intent = new Intent("custom-message");
+                    //            intent.putExtra("quantity",Integer.parseInt(quantity.getText().toString()));
+                    intent.putExtra("menos",Double.toString(cc+item.getPrecventa()));
+
+                    LocalBroadcastManager.getInstance(mainContext).sendBroadcast(intent);
 
 
                 }
 
             }
         });
+
+    }
+    public void realmgrbarenbasedatosdetalle(int iddetallepedido, int idproducto, int cantidad, Double precventa,  String nombreproducto, int idalmacen )
+    {
+        Realm realm = Realm.getDefaultInstance();
+        Detallepedidorealm det = new Detallepedidorealm();
+        det.setIddetallepedidorealm(idproducto);
+        det.setIdproductorealm(idproducto);
+        det.setCantidadrealm(cantidad);
+        det.setPrecventarealm(precventa);
+        det.setNombreproductorealm(nombreproducto);
+        det.setIdalmacenrealm(idalmacen);
+        realm.beginTransaction();
+        //realm.copyToRealm((Iterable<RealmModel>) det);
+        realm.commitTransaction();
+    }
+
+    public Boolean  verificarsiexiste(int r){
+
+       // RealmResults<CarDb> results = realm.where(CarDb.class).equalTo("iddetallepedido",r).findAll();
+
+
+        //if(results.size()>0){
+          //  return  true;
+
+        //}else {
+        return false;
+        //}
 
     }
 

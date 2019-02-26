@@ -69,7 +69,7 @@
                             android:layout_weight="0.86"
                             android:background="@drawable/tabcirculoverdecara"
                             android:text="0"
-                            android:textColor="@color/icons"
+                            android:textColor="#a31019"
                             android:textSize="24sp" />
                     </LinearLayout>
 
@@ -155,8 +155,9 @@
 
                         <Button
                             android:id="@+id/plus_button1"
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:layout_gravity="left"
                             android:layout_weight="0.50"
                             android:background="@drawable/tabcirculof"
                             android:text="+"
@@ -180,8 +181,9 @@
 
                         <Button
                             android:id="@+id/menos_button1"
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:layout_gravity="right"
                             android:background="@drawable/circulofondo"
                             android:text="--"
                             android:textColor="@color/cardview_light_background"

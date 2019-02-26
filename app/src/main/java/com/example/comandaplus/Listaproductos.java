@@ -2,21 +2,25 @@ package com.example.comandaplus;
 
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.MultiAutoCompleteTextView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.comandaplus.adapter.Adaptadormaestraproducto;
@@ -25,6 +29,7 @@ import com.example.comandaplus.modelo.Productos;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -37,52 +42,52 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.Realm;
+import io.realm.RealmResults;
 
-import static android.content.Context.MODE_PRIVATE;
 
-
-public class Listaproductos extends Activity  implements   RecyclerView.OnItemTouchListener {
+public class Listaproductos extends Activity implements RecyclerView.OnItemTouchListener {
     public static final int CONNECTION_TIMEOUT = 10000;
     public static final int READ_TIMEOUT = 15000;
-
+    //Realm realm = Realm.getDefaultInstance();
+    @BindView(R.id.totalsoles)
+    TextView totalsoles;
+    @BindView(R.id.maestraproductos)
+    RecyclerView maestraproductos;
 
     private RecyclerView recycler;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager lManager;
-    ArrayList<Productos> people=new ArrayList<>();
+    ArrayList<Productos> people = new ArrayList<>();
     private String[] strArrData = {"No Suggestions"};
 
 
     ArrayList<String> mylist = new ArrayList<String>();
     SharedPreferences prefs;
-    String face, FileName ="myfile" ,nombre,almacenactivosf,claveusuario,idalmacensf,idalmacenactivo,almacenactivo;
+    String face, FileName = "myfile", nombre, almacenactivosf, claveusuario, idalmacensf, idalmacenactivo, almacenactivo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.layoutmaestrasproduc);
         ButterKnife.bind(this);
-
-
-
-
-
-
-
-
-
+        vaciardatosdedetallepedidorealm();
         prefs = this.getSharedPreferences(FileName, MODE_PRIVATE);
-        face=prefs.getString("facebook","");
-
-        MultiAutoCompleteTextView myMultiAutoCompleteTextView= (MultiAutoCompleteTextView) findViewById(R.id.multiAutoCompleteTextView);
+        face = prefs.getString("facebook", "");
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,new IntentFilter("custom-message"));
+        MultiAutoCompleteTextView myMultiAutoCompleteTextView = (MultiAutoCompleteTextView) findViewById(R.id.multiAutoCompleteTextView);
 // Obtener el Recycler PRODUCTOS
         recycler = (RecyclerView) findViewById(R.id.maestraproductos);
 
         int numberOfColumns = 6;
+
         recycler.setHasFixedSize(true);
         lManager = new LinearLayoutManager(this);
         recycler.setLayoutManager(lManager);
+
         new llenarautocomplete().execute("1");
         new traerproductosporidalmacenidfamilia().execute("1");
 
@@ -95,10 +100,51 @@ public class Listaproductos extends Activity  implements   RecyclerView.OnItemTo
 
 
                 new traerproductospornombre().execute(selected);
+
             }
         });
 
+
+
+
     }
+    public BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // Get extra data included in the Intent
+            String ItemNamemas = intent.getStringExtra("mas");
+            String ItemNamemenos = intent.getStringExtra("menos");
+
+            Double totalsoles2 = Double.parseDouble(getTotalsoles().toString());
+
+            if (ItemNamemas.isEmpty()){
+
+
+
+            }else{
+
+
+                totalsoles.setText(String.valueOf(Double.parseDouble(totalsoles.getText().toString())+totalsoles2));
+
+
+            }
+           if (ItemNamemenos.isEmpty()){
+
+           }else{
+
+
+
+
+int nuevovalormenos=Integer.parseInt(ItemName);
+
+if (totalsoles-nuevovalor<0){
+
+
+}
+            totalsoles.setText(ItemName);
+
+        }}
+    };
     @Override
     public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
         return false;
@@ -149,11 +195,9 @@ public class Listaproductos extends Activity  implements   RecyclerView.OnItemTo
                 // Append parameters to URL
 
 
-
                 Uri.Builder builder = new Uri.Builder()
 
-                        .appendQueryParameter("idalmacen", params[0])
-                        ;
+                        .appendQueryParameter("idalmacen", params[0]);
 
                 String query = builder.build().getEncodedQuery();
 
@@ -192,10 +236,10 @@ public class Listaproductos extends Activity  implements   RecyclerView.OnItemTo
                     );
 
                 } else {
-                    return("Connection error");
+                    return ("Connection error");
                 }
             } catch (IOException e) {
-                e.printStackTrace()                ;
+                e.printStackTrace();
 
                 return e.toString();
             } finally {
@@ -212,10 +256,10 @@ public class Listaproductos extends Activity  implements   RecyclerView.OnItemTo
 
             ArrayList<String> dataList = new ArrayList<String>();
             Productos meso;
-            if(result.equals("no rows")) {
-                Toast.makeText(getApplicationContext(),"no existen datos a mostrar",Toast.LENGTH_LONG).show();
+            if (result.equals("no rows")) {
+                Toast.makeText(getApplicationContext(), "no existen datos a mostrar", Toast.LENGTH_LONG).show();
 
-            }else{
+            } else {
 
                 try {
 
@@ -226,17 +270,20 @@ public class Listaproductos extends Activity  implements   RecyclerView.OnItemTo
                     for (int i = 0; i < jArray.length(); i++) {
                         JSONObject json_data = jArray.optJSONObject(i);
 
-                        meso = new Productos(json_data.getInt("idproducto"), json_data.getString("nombreproducto"), json_data.getString("estadoproducto"), json_data.getString("ingredientes"),json_data.getDouble(("precventa")),json_data.getString("descripcion"));
+                        meso = new Productos(json_data.getInt("idproducto"), json_data.getString("nombreproducto"), json_data.getString("estadoproducto"), json_data.getString("ingredientes"), json_data.getDouble(("precventa")), json_data.getString("descripcion"));
                         people.add(meso);
 
                     }
                     strArrData = dataList.toArray(new String[dataList.size()]);
 
 
-                    adapter = new Adaptadormaestraproducto(people,getApplicationContext());
+                    adapter = new Adaptadormaestraproducto(people, getApplicationContext());
                     recycler.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
 
                     recycler.setAdapter(adapter);
+
+
+                    //recycler.getChildItemId(R.id.cantidadtarjeta);
 
 
                 } catch (JSONException e) {
@@ -283,11 +330,9 @@ public class Listaproductos extends Activity  implements   RecyclerView.OnItemTo
                 // Append parameters to URL
 
 
-
                 Uri.Builder builder = new Uri.Builder()
 
-                        .appendQueryParameter("idalmacen", params[0])
-                        ;
+                        .appendQueryParameter("idalmacen", params[0]);
 
                 String query = builder.build().getEncodedQuery();
 
@@ -326,10 +371,10 @@ public class Listaproductos extends Activity  implements   RecyclerView.OnItemTo
                     );
 
                 } else {
-                    return("Connection error");
+                    return ("Connection error");
                 }
             } catch (IOException e) {
-                e.printStackTrace()                ;
+                e.printStackTrace();
 
                 return e.toString();
             } finally {
@@ -346,10 +391,10 @@ public class Listaproductos extends Activity  implements   RecyclerView.OnItemTo
 
             ArrayList<String> dataList = new ArrayList<String>();
             Productos meso;
-            if(result.equals("no rows")) {
-                Toast.makeText(getApplicationContext(),"no existen datos a mostrar",Toast.LENGTH_LONG).show();
+            if (result.equals("no rows")) {
+                Toast.makeText(getApplicationContext(), "no existen datos a mostrar", Toast.LENGTH_LONG).show();
 
-            }else{
+            } else {
 
                 try {
 
@@ -360,7 +405,7 @@ public class Listaproductos extends Activity  implements   RecyclerView.OnItemTo
                     for (int i = 0; i < jArray.length(); i++) {
                         JSONObject json_data = jArray.optJSONObject(i);
 
-                        meso = new Productos(json_data.getInt("idproducto"), json_data.getString("nombreproducto"), json_data.getString("estadoproducto"), json_data.getString("ingredientes"),json_data.getDouble(("precventa")),json_data.getString("descripcion"));
+                        meso = new Productos(json_data.getInt("idproducto"), json_data.getString("nombreproducto"), json_data.getString("estadoproducto"), json_data.getString("ingredientes"), json_data.getDouble(("precventa")), json_data.getString("descripcion"));
                         people.add(meso);
 
                         mylist.add(json_data.getString("nombreproducto"));
@@ -373,10 +418,9 @@ public class Listaproductos extends Activity  implements   RecyclerView.OnItemTo
                             = (MultiAutoCompleteTextView) findViewById(
                             R.id.multiAutoCompleteTextView);
                     myMultiAutoCompleteTextView.setAdapter(
-                            new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_dropdown_item_1line,mylist));
+                            new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_dropdown_item_1line, mylist));
                     myMultiAutoCompleteTextView.setTokenizer(
                             new MultiAutoCompleteTextView.CommaTokenizer());
-
 
 
                 } catch (JSONException e) {
@@ -423,11 +467,9 @@ public class Listaproductos extends Activity  implements   RecyclerView.OnItemTo
                 // Append parameters to URL
 
 
-
                 Uri.Builder builder = new Uri.Builder()
 
-                        .appendQueryParameter("nombreproducto", params[0])
-                        ;
+                        .appendQueryParameter("nombreproducto", params[0]);
 
                 String query = builder.build().getEncodedQuery();
 
@@ -466,10 +508,10 @@ public class Listaproductos extends Activity  implements   RecyclerView.OnItemTo
                     );
 
                 } else {
-                    return("Connection error");
+                    return ("Connection error");
                 }
             } catch (IOException e) {
-                e.printStackTrace()                ;
+                e.printStackTrace();
 
                 return e.toString();
             } finally {
@@ -486,20 +528,21 @@ public class Listaproductos extends Activity  implements   RecyclerView.OnItemTo
 
             ArrayList<String> dataList = new ArrayList<String>();
             Productos meso;
-            if(result.equals("no rows")) {
-                Toast.makeText(getApplicationContext(),"no existen datos a mostrar",Toast.LENGTH_LONG).show();
+            if (result.equals("no rows")) {
+                Toast.makeText(getApplicationContext(), "no existen datos a mostrar", Toast.LENGTH_LONG).show();
 
-            }else{
+            } else {
                 try {
                     JSONArray jArray = new JSONArray(result);
                     for (int i = 0; i < jArray.length(); i++) {
                         JSONObject json_data = jArray.optJSONObject(i);
-                        meso = new Productos(json_data.getInt("idproducto"), json_data.getString("nombreproducto"), json_data.getString("estadoproducto"), json_data.getString("ingredientes"),json_data.getDouble(("precventa")),json_data.getString("descripcion"));
+                        meso = new Productos(json_data.getInt("idproducto"), json_data.getString("nombreproducto"), json_data.getString("estadoproducto"), json_data.getString("ingredientes"), json_data.getDouble(("precventa")), json_data.getString("descripcion"));
                         people.add(meso);
                     }
                     strArrData = dataList.toArray(new String[dataList.size()]);
-                    recycler.removeAllViews();recycler.setAdapter(null);
-                    adapter = new Adaptadormaestraproducto(people,getApplicationContext());
+                    recycler.removeAllViews();
+                    recycler.setAdapter(null);
+                    adapter = new Adaptadormaestraproducto(people, getApplicationContext());
                     recycler.setLayoutManager(new GridLayoutManager(getApplicationContext(), 1));
                     recycler.setAdapter(adapter);
                 } catch (JSONException e) {
@@ -507,5 +550,20 @@ public class Listaproductos extends Activity  implements   RecyclerView.OnItemTo
                 }
             }
         }
+    }
+
+
+    private void vaciardatosdedetallepedidorealm() {
+
+     //   realm.beginTransaction();
+       // RealmResults<CarDb> results = realm.where(CarDb.class).findAll();
+        //results.deleteAllFromRealm();
+        //realm.commitTransaction();
+
+
+    }
+
+    public TextView getTotalsoles() {
+        return totalsoles;
     }
 }
