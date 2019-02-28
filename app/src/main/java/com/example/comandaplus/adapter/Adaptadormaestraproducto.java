@@ -170,7 +170,7 @@ this.cantidadtarjeta=(TextView) v.findViewById(R.id.cantidadtarjeta);
 
                 Intent intent = new Intent("custom-message");
                 //            intent.putExtra("quantity",Integer.parseInt(quantity.getText().toString()));
-                intent.putExtra("mas",Double.toString(cc+item.getPrecventa()));
+                intent.putExtra("mas",Double.toString(item.getPrecventa()));
 
                 LocalBroadcastManager.getInstance(mainContext).sendBroadcast(intent);
 
@@ -224,7 +224,7 @@ this.cantidadtarjeta=(TextView) v.findViewById(R.id.cantidadtarjeta);
 
                     Intent intent = new Intent("custom-message");
                     //            intent.putExtra("quantity",Integer.parseInt(quantity.getText().toString()));
-                    intent.putExtra("menos",Double.toString(cc+item.getPrecventa()));
+                    intent.putExtra("menos",Double.toString(item.getPrecventa()));
 
                     LocalBroadcastManager.getInstance(mainContext).sendBroadcast(intent);
 

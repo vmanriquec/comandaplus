@@ -1,6 +1,4 @@
 package com.example.comandaplus;
-
-
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -11,25 +9,22 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MotionEvent;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import android.widget.Toolbar;
 import com.example.comandaplus.adapter.Adaptadormaestraproducto;
+import com.example.comandaplus.adapter.RecyclerViewDataAdapter;
 import com.example.comandaplus.modelo.Productos;
-
+import com.example.comandaplus.modelo.SectionDataModel;
+import com.example.comandaplus.modelo.SingleItemModel;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -44,26 +39,20 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.realm.Realm;
-import io.realm.RealmResults;
-
-
 public class Listaproductos extends Activity implements RecyclerView.OnItemTouchListener {
     public static final int CONNECTION_TIMEOUT = 10000;
     public static final int READ_TIMEOUT = 15000;
-    //Realm realm = Realm.getDefaultInstance();
+    private Toolbar toolbar;
+    ArrayList<SectionDataModel> allSampleData;
     @BindView(R.id.totalsoles)
     TextView totalsoles;
     @BindView(R.id.maestraproductos)
     RecyclerView maestraproductos;
-
     private RecyclerView recycler;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager lManager;
     ArrayList<Productos> people = new ArrayList<>();
     private String[] strArrData = {"No Suggestions"};
-
-
     ArrayList<String> mylist = new ArrayList<String>();
     SharedPreferences prefs;
     String face, FileName = "myfile", nombre, almacenactivosf, claveusuario, idalmacensf, idalmacenactivo, almacenactivo;
@@ -91,19 +80,46 @@ public class Listaproductos extends Activity implements RecyclerView.OnItemTouch
         new llenarautocomplete().execute("1");
         new traerproductosporidalmacenidfamilia().execute("1");
 
-        myMultiAutoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                String selected = (String) parent.getItemAtPosition(position);
 
 
-                new traerproductospornombre().execute(selected);
+    //    toolbar = (Toolbar) findViewById(R.id.toolbar);
 
+        allSampleData = new ArrayList<SectionDataModel>();
+
+        if (toolbar != null) {
+           // setSupportActionBar(toolbar);
+          //  toolbar.ssetTitle("G PlayStore");
+
+        }
+
+String[ ] fami={"Hamburguesa clasica","Hamburguesas Especiales","Salchipapas","Pollos","Gaseosas"};
+        //createDummyData();
+        for (int i = 1; i <= 4; i++) {
+
+            SectionDataModel dm = new SectionDataModel();
+
+            dm.setHeaderTitle(fami[ i].toString() + i);
+
+            ArrayList<SingleItemModel> singleItem = new ArrayList<SingleItemModel>();
+            for (int j = 0; j <= 5; j++) {
+                singleItem.add(new SingleItemModel("Item " + j, "URL " + j));
             }
-        });
 
+            dm.setAllItemsInSection(singleItem);
+
+            allSampleData.add(dm);
+
+        }
+
+        RecyclerView my_recycler_view = (RecyclerView) findViewById(R.id.my_recycler_view);
+
+        my_recycler_view.setHasFixedSize(true);
+
+        RecyclerViewDataAdapter adapter = new RecyclerViewDataAdapter(this, allSampleData);
+
+        my_recycler_view.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+
+        my_recycler_view.setAdapter(adapter);
 
 
 
@@ -115,33 +131,20 @@ public class Listaproductos extends Activity implements RecyclerView.OnItemTouch
             String ItemNamemas = intent.getStringExtra("mas");
             String ItemNamemenos = intent.getStringExtra("menos");
 
-            Double totalsoles2 = Double.parseDouble(getTotalsoles().toString());
+            Double totalsoles2 = Double.parseDouble(totalsoles.getText().toString());
 
-            if (ItemNamemas.isEmpty()){
-
-
-
-            }else{
-
-
-                totalsoles.setText(String.valueOf(Double.parseDouble(totalsoles.getText().toString())+totalsoles2));
-
-
+            if (ItemNamemas != null ){
+                Double nuevovalormas=Double.valueOf(ItemNamemas);
+                    totalsoles.setText(String.valueOf(Double.parseDouble(totalsoles.getText().toString())+nuevovalormas));
             }
-           if (ItemNamemenos.isEmpty()){
+           if (ItemNamemenos != null ){
+    Double nuevovalormenos=Double.valueOf(ItemNamemenos);
 
-           }else{
+                if (totalsoles2-nuevovalormenos>0){
 
+                    totalsoles.setText(String.valueOf(Double.parseDouble(totalsoles.getText().toString())-nuevovalormenos));
+                    }
 
-
-
-int nuevovalormenos=Integer.parseInt(ItemName);
-
-if (totalsoles-nuevovalor<0){
-
-
-}
-            totalsoles.setText(ItemName);
 
         }}
     };
@@ -414,13 +417,6 @@ if (totalsoles-nuevovalor<0){
                     strArrData = dataList.toArray(new String[dataList.size()]);
 
 
-                    MultiAutoCompleteTextView myMultiAutoCompleteTextView
-                            = (MultiAutoCompleteTextView) findViewById(
-                            R.id.multiAutoCompleteTextView);
-                    myMultiAutoCompleteTextView.setAdapter(
-                            new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_dropdown_item_1line, mylist));
-                    myMultiAutoCompleteTextView.setTokenizer(
-                            new MultiAutoCompleteTextView.CommaTokenizer());
 
 
                 } catch (JSONException e) {
@@ -565,5 +561,8 @@ if (totalsoles-nuevovalor<0){
 
     public TextView getTotalsoles() {
         return totalsoles;
+    }
+    public void createDummyData() {
+
     }
 }
