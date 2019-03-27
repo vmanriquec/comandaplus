@@ -1,4 +1,4 @@
-package com.example.comandaplus;
+    package com.example.comandaplus;
 
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -15,6 +15,10 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 
+
+
+
+  
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -30,6 +34,12 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+
+
+
+
+
+
 
 
 public class MainActivity extends AppCompatActivity {
@@ -61,7 +71,7 @@ public  static final String PATH_MESSAGE="message";
                 .name(Realm.DEFAULT_REALM_NAME)
                 .schemaVersion(0)
                 .deleteRealmIfMigrationNeeded()
-
+  
 .build();
         Realm.setDefaultConfiguration(configuration);
         FacebookSdk.sdkInitialize(getApplicationContext());
@@ -78,6 +88,10 @@ public  static final String PATH_MESSAGE="message";
                                 + "\n" +
                                 "Auth Token: "
                                 + loginResult.getAccessToken().getToken());
+                        orejas        
+                                
+                                
+                                
             }
 
 
