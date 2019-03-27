@@ -1,30 +1,66 @@
 package com.example.comandaplus.Realm;
 
-import io.realm.RealmObject;
+import com.example.comandaplus.modelo.Detallepedido;
+
+import io.realm.RealmList;
 import io.realm.annotations.PrimaryKey;
+import io.realm.RealmObject;
+import io.realm.annotations.Required;
 
+public class Detallepedidorealm extends RealmObject{
+      @PrimaryKey
+    public int id;
 
-public class Detallepedidorealm {
-    @PrimaryKey
-    public static  int iddetallepedidorealm;
-
-    private int idproductorealm;
+    private int idpedido;
     private int cantidadrealm;
     private Double precventarealm;
-
     private String nombreproductorealm;
     private String imagenrealm;
     private int idalmacenrealm;
-
-
-
-    public static int getIddetallepedidorealm() {
-        return iddetallepedidorealm;
+    private int idproductorealm;
+    private RealmList<ProductoRealm> productoRealms;
+    public Double getSubtotal() {
+        return subtotal;
     }
 
-    public static void setIddetallepedidorealm(int iddetallepedidorealm) {
-        Detallepedidorealm.iddetallepedidorealm = iddetallepedidorealm;
+    public void setSubtotal(Double subtotal) {
+        this.subtotal = subtotal;
     }
+
+    private Double subtotal;
+    public int getIdpedido() {
+        return idpedido;
+    }
+
+    public void setIdpedido(int idpedido) {
+        this.idpedido = idpedido;
+    }
+
+
+
+
+
+    public RealmList<ProductoRealm> getProductoRealms() {
+        return productoRealms;
+    }
+
+    public void setProductoRealms(RealmList<ProductoRealm> productoRealms) {
+        this.productoRealms = productoRealms;
+    }
+
+
+
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+
+
 
     public int getIdproductorealm() {
         return idproductorealm;
@@ -58,8 +94,6 @@ public class Detallepedidorealm {
         this.nombreproductorealm = nombreproductorealm;
     }
 
-
-
     public String getImagenrealm() {
         return imagenrealm;
     }
@@ -68,7 +102,6 @@ public class Detallepedidorealm {
         this.imagenrealm = imagenrealm;
     }
 
-
     public int getIdalmacenrealm() {
         return idalmacenrealm;
     }
@@ -76,7 +109,6 @@ public class Detallepedidorealm {
     public void setIdalmacenrealm(int idalmacenrealm) {
         this.idalmacenrealm = idalmacenrealm;
     }
-
 
 
 

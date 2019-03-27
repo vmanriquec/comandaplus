@@ -11,7 +11,7 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import com.example.comandaplus.CarDb;
+
 import com.example.comandaplus.R;
 import com.example.comandaplus.modelo.Detallepedido;
 import com.squareup.picasso.Picasso;
@@ -124,11 +124,6 @@ String foto=item.getImagen().toString();
                     Double subto=pr*j;
 
                     viewHolder.productoingredientes.setText(String.valueOf(subto));
-                      realm.beginTransaction();
-                    RealmResults<CarDb> results = realm.where(CarDb.class).equalTo("idproducto",item.getIdproducto()).findAll();
-                    results.get(0).setcantidadapedir(c);
-
-                    realm.commitTransaction();
 
                 }            }
         });
@@ -137,10 +132,6 @@ String foto=item.getImagen().toString();
             @Override
             public void onClick(View v) {
 
-                realm.beginTransaction();
-                RealmResults<CarDb> results = realm.where(CarDb.class).equalTo("idproducto",item.getIdproducto()).findAll();
-results.deleteAllFromRealm();
-                realm.commitTransaction();
 
 
 
@@ -170,12 +161,6 @@ results.deleteAllFromRealm();
 
 
 
-
-                 realm.beginTransaction();
-                    RealmResults<CarDb> results = realm.where(CarDb.class).equalTo("iddetallepedido",item.getIdproducto()).findAll();
-results.get(0).setcantidadapedir(c);
-
-                    realm.commitTransaction();
 
 
 

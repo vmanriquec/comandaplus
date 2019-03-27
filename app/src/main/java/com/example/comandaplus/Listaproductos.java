@@ -1,4 +1,6 @@
 package com.example.comandaplus;
+
+
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -9,6 +11,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,14 +20,16 @@ import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
+
 import com.example.comandaplus.adapter.Adaptadormaestraproducto;
-import com.example.comandaplus.adapter.RecyclerViewDataAdapter;
 import com.example.comandaplus.modelo.Productos;
 import com.example.comandaplus.modelo.SectionDataModel;
 import com.example.comandaplus.modelo.SingleItemModel;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -39,20 +44,28 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+
 public class Listaproductos extends Activity implements RecyclerView.OnItemTouchListener {
     public static final int CONNECTION_TIMEOUT = 10000;
     public static final int READ_TIMEOUT = 15000;
+    //Realm realm = Realm.getDefaultInstance();
     private Toolbar toolbar;
+
+
     ArrayList<SectionDataModel> allSampleData;
     @BindView(R.id.totalsoles)
     TextView totalsoles;
     @BindView(R.id.maestraproductos)
     RecyclerView maestraproductos;
+
     private RecyclerView recycler;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager lManager;
     ArrayList<Productos> people = new ArrayList<>();
     private String[] strArrData = {"No Suggestions"};
+
+
     ArrayList<String> mylist = new ArrayList<String>();
     SharedPreferences prefs;
     String face, FileName = "myfile", nombre, almacenactivosf, claveusuario, idalmacensf, idalmacenactivo, almacenactivo;
@@ -64,6 +77,7 @@ public class Listaproductos extends Activity implements RecyclerView.OnItemTouch
         setContentView(R.layout.layoutmaestrasproduc);
         ButterKnife.bind(this);
         vaciardatosdedetallepedidorealm();
+        ((AppCompatActivity) getApplicationContext()).getSupportActionBar().hide();
         prefs = this.getSharedPreferences(FileName, MODE_PRIVATE);
         face = prefs.getString("facebook", "");
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,new IntentFilter("custom-message"));
@@ -94,32 +108,23 @@ public class Listaproductos extends Activity implements RecyclerView.OnItemTouch
 
 String[ ] fami={"Hamburguesa clasica","Hamburguesas Especiales","Salchipapas","Pollos","Gaseosas"};
         //createDummyData();
-        for (int i = 1; i <= 4; i++) {
+        for (int i = 1; i <= 5; i++) {
 
             SectionDataModel dm = new SectionDataModel();
 
-            dm.setHeaderTitle(fami[ i].toString() + i);
+            dm.setHeaderTitle("Section " + i);
 
             ArrayList<SingleItemModel> singleItem = new ArrayList<SingleItemModel>();
-            for (int j = 0; j <= 5; j++) {
+            for (int j = 0; j <= 15; j++) {
                 singleItem.add(new SingleItemModel("Item " + j, "URL " + j));
             }
-
-            dm.setAllItemsInSection(singleItem);
+          //  dm.setAllItemsInSection(singleItem);
 
             allSampleData.add(dm);
 
         }
 
-        RecyclerView my_recycler_view = (RecyclerView) findViewById(R.id.my_recycler_view);
 
-        my_recycler_view.setHasFixedSize(true);
-
-        RecyclerViewDataAdapter adapter = new RecyclerViewDataAdapter(this, allSampleData);
-
-        my_recycler_view.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-
-        my_recycler_view.setAdapter(adapter);
 
 
 
@@ -139,31 +144,21 @@ String[ ] fami={"Hamburguesa clasica","Hamburguesas Especiales","Salchipapas","P
             }
            if (ItemNamemenos != null ){
     Double nuevovalormenos=Double.valueOf(ItemNamemenos);
-
                 if (totalsoles2-nuevovalormenos>0){
-
                     totalsoles.setText(String.valueOf(Double.parseDouble(totalsoles.getText().toString())-nuevovalormenos));
                     }
-
-
-        }}
+       }}
     };
     @Override
     public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
         return false;
     }
-
     @Override
     public void onTouchEvent(RecyclerView rv, MotionEvent e) {
-
     }
-
     @Override
     public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-
     }
-
-
     private class traerproductosporidalmacenidfamilia extends AsyncTask<String, String, String> {
 
         HttpURLConnection conne;

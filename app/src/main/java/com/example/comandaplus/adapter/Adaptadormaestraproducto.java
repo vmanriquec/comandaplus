@@ -17,8 +17,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.comandaplus.CarDb;
+
 import com.example.comandaplus.R;
+import com.example.comandaplus.Realm.Crudetallepedido;
 import com.example.comandaplus.Realm.Detallepedidorealm;
 import com.example.comandaplus.modelo.Detallepedido;
 import com.example.comandaplus.modelo.Productos;
@@ -48,6 +49,7 @@ public class Adaptadormaestraproducto extends RecyclerView.Adapter<Adaptadormaes
     ArrayList<Detallepedido> detallepedido = new ArrayList<>();
     Detallepedido objdetallepedido;
 
+    private Detallepedidorealm detallepedidorealm;
     public Adaptadormaestraproducto(List<Productos> items, Context contexto) {
         this.mainContext = contexto;
         this.items = items;
@@ -174,7 +176,8 @@ this.cantidadtarjeta=(TextView) v.findViewById(R.id.cantidadtarjeta);
 
                 LocalBroadcastManager.getInstance(mainContext).sendBroadcast(intent);
 
-
+adicionarnuevoproductoadetallerealm( 1,"sss",viewHolder.productonombre.getText().toString(),Double.parseDouble(item.getPrecventa().toString()),Integer.parseInt(viewHolder.idproducto.getText().toString()), Integer.parseInt(viewHolder.cantidadpedida.getText().toString()),2);
+Crudetallepedido.getAllDetallepedidorealm();
                 // if (verificarsiexiste(idp)){
                     //   Toast.makeText(getApplicationContext(),idp,Toast.LENGTH_SHORT).show();
                    // realmgrbarenbasedatosa(idp,t,cantped,pr,idp,foto);
@@ -189,15 +192,9 @@ this.cantidadtarjeta=(TextView) v.findViewById(R.id.cantidadtarjeta);
 
 
 
-
-
-
-
-
         viewHolder.mas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
 
 
                 int d= Integer.parseInt(viewHolder.cantidadpedida.getText().toString());
@@ -210,60 +207,49 @@ this.cantidadtarjeta=(TextView) v.findViewById(R.id.cantidadtarjeta);
                     viewHolder.cantidadpedida.setText(Integer.toString(d));
 
                     double cc= Double.parseDouble(viewHolder.cantidadtarjeta.getText().toString());
-
-
-
                    // TextView f= (TextView) mainContext.getApplicationContext. (R.id.totalsoles);
                     //f.setText(viewHolder.cantidadtarjeta.getText());
-
-
-
-
 
                     viewHolder.cantidadtarjeta.setText(Double.toString(cc-item.getPrecventa()));
 
                     Intent intent = new Intent("custom-message");
                     //            intent.putExtra("quantity",Integer.parseInt(quantity.getText().toString()));
                     intent.putExtra("menos",Double.toString(item.getPrecventa()));
-
                     LocalBroadcastManager.getInstance(mainContext).sendBroadcast(intent);
-
-
-                }
-
+     }
+            disminuirproductoadetallerealm(1,"sss",viewHolder.productonombre.getText().toString(),Double.parseDouble(item.getPrecventa().toString()),Integer.parseInt(viewHolder.idproducto.getText().toString()), Integer.parseInt(viewHolder.cantidadpedida.getText().toString()),2);
             }
         });
 
     }
-    public void realmgrbarenbasedatosdetalle(int iddetallepedido, int idproducto, int cantidad, Double precventa,  String nombreproducto, int idalmacen )
-    {
-        Realm realm = Realm.getDefaultInstance();
-        Detallepedidorealm det = new Detallepedidorealm();
-        det.setIddetallepedidorealm(idproducto);
-        det.setIdproductorealm(idproducto);
-        det.setCantidadrealm(cantidad);
-        det.setPrecventarealm(precventa);
-        det.setNombreproductorealm(nombreproducto);
-        det.setIdalmacenrealm(idalmacen);
-        realm.beginTransaction();
-        //realm.copyToRealm((Iterable<RealmModel>) det);
-        realm.commitTransaction();
+
+
+    private void adicionarnuevoproductoadetallerealm(Integer almacen,String rutainagen,String nombreproducto,Double preciovtaproducto,Integer idproducto,Integer cantidad,Integer idpedido) {
+        detallepedidorealm=new Detallepedidorealm();
+        detallepedidorealm.setIdalmacenrealm(almacen);
+        detallepedidorealm.setImagenrealm(rutainagen);
+        detallepedidorealm.setNombreproductorealm(nombreproducto);
+        detallepedidorealm.setPrecventarealm(preciovtaproducto);
+        detallepedidorealm.setIdproductorealm(idproducto);
+        detallepedidorealm.setCantidadrealm(cantidad);
+        detallepedidorealm.setIdpedido(idpedido);
+        detallepedidorealm.setSubtotal(preciovtaproducto+cantidad);
+        Crudetallepedido.addDetallepedidorealm(detallepedidorealm);
     }
 
-    public Boolean  verificarsiexiste(int r){
 
-       // RealmResults<CarDb> results = realm.where(CarDb.class).equalTo("iddetallepedido",r).findAll();
-
-
-        //if(results.size()>0){
-          //  return  true;
-
-        //}else {
-        return false;
-        //}
-
+    private void disminuirproductoadetallerealm(Integer almacen,String rutainagen,String nombreproducto,Double preciovtaproducto,Integer idproducto,Integer cantidad,Integer idpedido) {
+        detallepedidorealm=new Detallepedidorealm();
+        detallepedidorealm.setIdalmacenrealm(almacen);
+        detallepedidorealm.setImagenrealm(rutainagen);
+        detallepedidorealm.setNombreproductorealm(nombreproducto);
+        detallepedidorealm.setPrecventarealm(preciovtaproducto);
+        detallepedidorealm.setIdproductorealm(idproducto);
+        detallepedidorealm.setCantidadrealm(cantidad);
+        detallepedidorealm.setIdpedido(idpedido);
+        detallepedidorealm.setSubtotal(preciovtaproducto+cantidad);
+        Crudetallepedido.Disminuirdetalle(detallepedidorealm);
     }
-
     @Override
     public int getItemCount() {
         return items.size();

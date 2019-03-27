@@ -9,25 +9,29 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/colordos"
         android:configChanges="orientation"
         android:orientation="vertical"
         android:weightSum="1">
 
         <TextView
             android:id="@+id/totalsoles"
-            android:layout_width="100dp"
-            android:layout_height="30dp"
+            android:layout_width="70dp"
+            android:layout_height="40dp"
 
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
+            android:layout_gravity="right"
             android:layout_marginTop="3dp"
             android:layout_marginRight="5dp"
             android:layout_marginBottom="5dp"
-            android:background="@drawable/tabcirculoverdecara"
+            android:background="@drawable/fondototalsoles"
+            android:gravity="center_vertical"
             android:paddingLeft="10dp"
             android:text="0"
-            android:textColor="@color/fbutton_color_belize_hole"
-            android:textSize="24sp" />
+            android:textColor="@color/green"
+            android:textSize="24sp"
+            android:textStyle="normal" />
 
         <!--
             app:mtf_animationDuration="1000"
@@ -35,11 +39,6 @@
             app:mtf_labelColor="@android:color/holo_red_dark"
             app:mtf_openKeyboardOnFocus="true"
             -->
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/my_recycler_view"
-            android:layout_width="wrap_content"
-            android:layout_height="250dp"
-            android:scrollbars="none" />
 
         <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/maestraproductos"
@@ -47,7 +46,7 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="1dp"
             android:layout_marginRight="1dp"
-            android:background="@drawable/radial_gradient_bkg"
+            android:background="@color/place_autocomplete_prediction_primary_text"
             android:scrollbars="vertical">
 
         </android.support.v7.widget.RecyclerView>

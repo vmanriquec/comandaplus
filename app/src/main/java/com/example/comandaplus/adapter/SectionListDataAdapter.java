@@ -19,18 +19,18 @@ import com.example.comandaplus.modelo.Productos;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.List;
+
 
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 public class SectionListDataAdapter extends RecyclerView.Adapter<SectionListDataAdapter.AdaptadorViewHolder> {
     private Context mainContext;
-    private ArrayList<Productos> itemsList;
+    private ArrayList<Productos> itemsListo;
     private Context mContext;
-    private List<Productos> items;
+
     String foto;
-    public SectionListDataAdapter(Context context, ArrayList<Productos> itemsList) {
-        this.itemsList = itemsList;
+    public SectionListDataAdapter(Context context, ArrayList<Productos> itemsListo) {
+        this.itemsListo = itemsListo;
         this.mContext = context;
     }
 
@@ -41,11 +41,12 @@ public class SectionListDataAdapter extends RecyclerView.Adapter<SectionListData
         return mh;
     }
     //final Adaptadorproductos.AdaptadorViewHolder viewHolder, final int position
+    //SingleItemRowHolder holder, int i)
     @Override
-    public void onBindViewHolder(AdaptadorViewHolder viewHolder,final int i ) {
-         Productos iteme = itemsList.get(i);
+    public void onBindViewHolder(AdaptadorViewHolder viewHolder, int ii) {
+         Productos iteme = itemsListo.get(ii);
 
-        viewHolder.tvTitle.setText(iteme.getNombreproducto());
+
 
         viewHolder.itemView.setTag(iteme);
         viewHolder.tvTitle.setText(iteme.getNombreproducto());
@@ -66,7 +67,7 @@ public class SectionListDataAdapter extends RecyclerView.Adapter<SectionListData
 
     @Override
     public int getItemCount() {
-        return (null != itemsList ? itemsList.size() : 0);
+        return (null != itemsListo ? itemsListo.size() : 0);
     }
 
     public class AdaptadorViewHolder extends RecyclerView.ViewHolder {

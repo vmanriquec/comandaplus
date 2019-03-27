@@ -3,7 +3,7 @@
 
 
 
-    <color name="coloruno"> #22150F</color>
+    <color name="coloruno">#22150F</color>
     <color name="colordos">#FFDA02</color>
     <color name="colortres">#FEFEFE</color>
     <color name="colorcuatro">#A8846D</color>
@@ -14,8 +14,8 @@
 
 
 
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimary">#22150F</color>
+    <color name="colorPrimaryDark">#22150F</color>
     <color name="colorAccent">#d03a26</color>
     <color name="chatmio">#ff5722</color>
     <color name="chatotro">#43A047</color>
@@ -62,7 +62,7 @@
     <color name="colortextotitulo">#282828</color>
 
 
- <color name="place_autocomplete_prediction_primary_text">#ff212121</color>
+ <color name="place_autocomplete_prediction_primary_text">#212121</color>
     <color name="place_autocomplete_prediction_primary_text_highlight">#ff757575</color>
     <color name="place_autocomplete_prediction_secondary_text">#ff757575</color>
     <color name="place_autocomplete_search_hint">#ffbdbdbd</color>

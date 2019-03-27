@@ -18,7 +18,7 @@ import android.widget.Toast;
 
 import com.example.comandaplus.R;
 import com.example.comandaplus.modelo.Productos;
-import com.example.comandaplus.CarDb;
+
 
 
 import com.example.comandaplus.modelo.Detallepedido;
@@ -215,17 +215,7 @@ c=c+1;viewHolder.cantidadpedida.setText( String.valueOf(c));
                 String idalmacenactiv = prefs.getString("idalmacenactivo", "");
                 int i= Integer.parseInt(idalmacenactiv);
 
-                if (verificarsiexiste(idp)){
 
-                       Toast.makeText(mainContext.getApplicationContext(),"ya existe el producto en el pedido", Toast.LENGTH_SHORT).show();
-
-                }
-                else {
-
-                //   Toast.makeText(getApplicationContext(),idp,Toast.LENGTH_SHORT).show();
-                  realmgrbarenbasedatosa(idp,t,cantped,pr,idp,foto);
-
-                }
 
                 detallepedido.add(objdetallepedido);
                // viewHolder.cantidadpedida.setEnabled(false);
@@ -254,43 +244,8 @@ public void realmgrbarenbasedatosa(int iddet, String nombre, int cantidad, Doubl
 //Init the element
 
 
-    CarDb car = new CarDb();
 
 
-    car.setidproducto(idproducto);
-car.setIddetallepedido(iddet);
-car.setnombreproducto(nombre);
-
-  car.setcantidadapedir(cantidad);car.setprecio(precio);car.setImagen(imagen);
-
-    realm.beginTransaction();
-    realm.copyToRealm(car);
-
-   realm.commitTransaction();
-
-
-}
-    public Boolean verificarsiexiste(int r){
-
-        RealmResults<CarDb> results = realm.where(CarDb.class).equalTo("iddetallepedido",r).findAll();
-
-
-        if(results.size()>0){
-            return  true;
-
-            }else {
-            return false;
-            }
-
-}
-    public void realmrecuperarundato(){
-
-    Realm realm = Realm.getDefaultInstance();
-
-    RealmResults<CarDb> results = realm.where(CarDb.class)
-            .findAll();
-
-    Toast.makeText(mainContext.getApplicationContext(),"cantidad de datos"+ String.valueOf(results.size()), Toast.LENGTH_SHORT).show();
 }
 
 

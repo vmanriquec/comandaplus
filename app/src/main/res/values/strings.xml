@@ -15,8 +15,6 @@
     <string name="title_activity_login3">Sign in 3</string>
 
 
-
-
     <string name="gcm_defaultSenderId">446070839308</string>
     <string name="google_app_id">1:446070839308:android:c05fe56f2822a925</string>
     <string name="default_web_client_id">446070839308-gia8hn5qrr80naboh21nf4s79ia8712m.apps.googleusercontent.com</string>
@@ -110,4 +108,12 @@
     <string name="path_password_eye_mask_visible">M2,4.27 L2,4.27 L4.54,1.73 L4.54,1.73 L4.54,1 L23,1 L23,23 L1,23 L1,4.27 Z</string>
     <string name="path_password_strike_through">M3.27,4.27 L19.74,20.74</string>
     <string name="hello">Hello World, Click Me!</string>
+    <string name="title_activity_navegacion">Navegacion</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+
+
+
+    <string name="facebook_app_id">523436154846109</string>
 </resources>
