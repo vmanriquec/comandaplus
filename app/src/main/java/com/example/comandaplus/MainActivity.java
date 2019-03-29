@@ -14,11 +14,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
-
-
-
-
-  
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -34,17 +29,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
-
-
-
-
-
-
-
-
 public class MainActivity extends AppCompatActivity {
-
-
     @BindView(R.id.email)
     EditText email;
     @BindView(R.id.password)
