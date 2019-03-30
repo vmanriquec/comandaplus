@@ -14,15 +14,25 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
+import android.widget.Toast;
+
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.Profile;
+import com.facebook.ProfileTracker;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,6 +54,8 @@ private static final String PATH_START="start";
 public  static final String PATH_MESSAGE="message";
     private LoginButton loginButton;
     private CallbackManager callbackManager;
+    private ProfileTracker mProfileTracker;
+    String sessionusuario,sessionnombre,sessionapepat,sessionapemat;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,122 +64,41 @@ public  static final String PATH_MESSAGE="message";
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         Realm.init(this);
-        RealmConfiguration  configuration = new RealmConfiguration.Builder()
+        RealmConfiguration configuration = new RealmConfiguration.Builder()
                 .name(Realm.DEFAULT_REALM_NAME)
                 .schemaVersion(0)
                 .deleteRealmIfMigrationNeeded()
-  
-.build();
+
+                .build();
         Realm.setDefaultConfiguration(configuration);
         FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
-        loginButton = (LoginButton)findViewById(R.id.login_button);
+        loginButton = (LoginButton) findViewById(R.id.login_button);
 
-
+        loginButton.setReadPermissions(Arrays.asList(
+                "public_profile", "email"));
 
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
+                if (Profile.getCurrentProfile() == null) {
+                    mProfileTracker = new ProfileTracker() {
+                        @Override
+                        protected void onCurrentProfileChanged(Profile profile, Profile profile2) {
+                            mProfileTracker.stopTracking();
+                            sessionusuario = profile2.getId();
+                            sessionnombre = profile2.getName();
+                            sessionapepat = profile2.getFirstName();
+                            sessionapemat = profile2.getLastName();
+                            Log.d("TAG", sessionusuario);
 
-                Log.d("TAG", "token facebook: " +loginResult.getAccessToken().getUserId()
-                                + "\n" +
-                                "Auth Token: "
-                                + loginResult.getAccessToken().getToken());
-                        orejas        
-                                
-                         comelon  
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         java android facebook android-studio facebook-graph-api
-                         I am Trying to get gender and birthday of current login user from Facebook, but I always getting (id, email, name) I have search everything related to this but I didn't get exactly that for I am looking. below code, I have Trying that's not working.
-                         
-                         facebookLoginButton  = (LoginButton)view .findViewById(R.id.fragment_login_facebook);
-                                 facebookLoginButton.setFragment(this);
-                         callbackManager = CallbackManager.Factory.create();
-                         
-                         facebookLoginButton.setReadPermissions(Arrays.asList("public_profile", "email", "user_birthday", "user_friends"));
-                                 callbackManager = CallbackManager.Factory.create();
-                         
-                             facebookLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-                                 private ProfileTracker mProfileTracker;
-                                 @Override
-                                 public void onSuccess(LoginResult loginResult) {
-                         
-                         
-                                     String accessTocken = loginResult.getAccessToken().getToken().toString();
-                         
-                                     Log.v("TAG", "Access Token " + loginResult.getAccessToken().getToken());
-                                     GraphRequest request = GraphRequest.newMeRequest(
-                                             loginResult.getAccessToken(),
-                                             new GraphRequest.GraphJSONObjectCallback() {
-                                                 @Override
-                                                 public void onCompleted(JSONObject object, GraphResponse response) {
-                         
-                                                     try {
-                                                         String email = object.getString("birthday");
-                                                         String name = object.getString("gender");
-                                                         Toast.makeText(getActivity().getApplicationContext(),email + " " + name ,Toast.LENGTH_SHORT).show();
-                                                     } catch (JSONException e) {
-                                                         e.printStackTrace();
-                                                     }
-                                                 }
-                                             });
-                         
-                                     Bundle parameters = new Bundle();
-                                     parameters.putString("fields", "id,name,email,gender,birthday");
-                                     request.setParameters(parameters);
-                                     request.executeAsync();
-                         
-                         
-                         
-                                     if (com.facebook.Profile.getCurrentProfile() == null){
-                                         mProfileTracker = new ProfileTracker() {
-                                             @Override
-                                             protected void onCurrentProfileChanged(com.facebook.Profile oldProfile, com.facebook.Profile currentProfile) {
-                                                 mProfileTracker.stopTracking();
-                                             }
-                                         };
-                                         mProfileTracker.startTracking();
-                                     } else {
-                                         com.facebook.Profile profile = com.facebook.Profile.getCurrentProfile();
-                                     }
-                         
-                                     try {
-                                         URL image_value = new URL("http://graph.facebook.com/" + loginResult.getAccessToken().getUserId() + "/picture?type=large");
-                                         Log.v(Constants.TAG, image_value + "");
-                                     } catch (Exception e) {
-                                     }
-                                 }
-                         
-                                 @Override
-                                 public void onCancel() {
-                                     Log.e("TAG", "wrong");
-                                 }
-                         
-                                 @Override
-                                 public void onError(FacebookException error) {
-                                     Log.e("TAG", "wrong");
-                                 }
-                             });
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                                
+                        }
+                    };
+
+                }
+
+
             }
-
-
 
             @Override
             public void onCancel() {
