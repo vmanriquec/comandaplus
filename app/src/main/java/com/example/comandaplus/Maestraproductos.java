@@ -13,20 +13,25 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.comandaplus.Realm.CrudUsuarios;
 import com.example.comandaplus.Realm.Crudetallepedido;
 import com.example.comandaplus.Realm.Detallepedidorealm;
+import com.example.comandaplus.Realm.UsuariosRealm;
 import com.example.comandaplus.adapter.Adaptadormaestraproducto;
 import com.example.comandaplus.modelo.Productos;
 import com.example.comandaplus.modelo.SectionDataModel;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -43,12 +48,17 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
+
 import io.realm.Realm;
 import butterknife.BindView;
 import butterknife.Unbinder;
 import io.realm.RealmConfiguration;
+import io.realm.RealmResults;
+import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 import static android.content.Context.MODE_PRIVATE;
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
  * Created by Usuario on 10/03/2018.
@@ -83,9 +93,19 @@ totalsoles=(TextView)view.findViewById(R.id.totalsoles);
 realm=Realm.getDefaultInstance();
 
         new Maestraproductos.traerproductosporidalmacenidfamilia().execute("1","3");
+    ImageView toto =(ImageView) view.findViewById(R.id.imagendefacebook);
+
+   UsuariosRealm u =new UsuariosRealm();
+   u= CrudUsuarios.getUsuariosRealmByidusuario(0);
 
 
-        return view;
+    String  imgUrl = "https://graph.facebook.com/"+u.getIdfacebook()+"/picture?type=large";
+    Log.d("dato","eeeso"+u.getIdfacebook());
+    Picasso.with(getApplicationContext()) .load(imgUrl).transform(new CropCircleTransformation()).resize(120, 120)
+            .into(toto);
+
+
+    return view;
     }
 
 

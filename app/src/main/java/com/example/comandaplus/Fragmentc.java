@@ -18,13 +18,17 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.comandaplus.Realm.CrudUsuarios;
+import com.example.comandaplus.Realm.UsuariosRealm;
 import com.example.comandaplus.adapter.Adaptadormaestraproducto;
 import com.example.comandaplus.modelo.Productos;
 import com.example.comandaplus.modelo.SectionDataModel;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,13 +45,16 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.Unbinder;
+import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 import static android.content.Context.MODE_PRIVATE;
 import static com.example.comandaplus.Listaproductos.CONNECTION_TIMEOUT;
 import static com.example.comandaplus.Listaproductos.READ_TIMEOUT;
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class Fragmentc  extends Fragment implements View.OnClickListener, RecyclerView.OnItemTouchListener {
     ArrayList<SectionDataModel> allSampleData;
@@ -97,7 +104,14 @@ public class Fragmentc  extends Fragment implements View.OnClickListener, Recycl
 
         new Fragmentc.traerproductosporidalmacenidfamilia().execute("1","3");
 
+        ImageView toto =(ImageView) view.findViewById(R.id.imagendefacebook);
 
+        List<UsuariosRealm> UsuariosRealm = CrudUsuarios.getAllUsuariosRealm();
+
+        String  imgUrl = "https://graph.facebook.com/"+UsuariosRealm.get(0).getIdfacebook()+"/picture?type=large";
+
+        Picasso.with(getApplicationContext()) .load(imgUrl).transform(new CropCircleTransformation()).resize(120, 120)
+                .into(toto);
         return view;
     }
 

@@ -14,24 +14,36 @@
         android:orientation="vertical"
         android:weightSum="1">
 
-        <TextView
-            android:id="@+id/totalsoles"
-            android:layout_width="70dp"
-            android:layout_height="40dp"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:layout_gravity="right"
-            android:layout_marginTop="3dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/fondototalsoles"
-            android:gravity="center_vertical"
-            android:paddingLeft="10dp"
-            android:text="0"
-            android:textColor="@color/green"
-            android:textSize="24sp"
-            android:textStyle="normal" />
+            <ImageView
+                android:id="@+id/imagendefacebook"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="left"
+                card_view:srcCompat="@drawable/com_facebook_profile_picture_blank_square" />
+
+            <TextView
+                android:id="@+id/totalsoles"
+                android:layout_width="70dp"
+                android:layout_height="40dp"
+
+                android:layout_centerHorizontal="false"
+                android:layout_centerVertical="false"
+                android:layout_gravity="right|center_horizontal|center_vertical"
+                android:layout_marginTop="3dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/fondototalsoles"
+                android:paddingLeft="10dp"
+                android:text="000"
+                android:textColor="@color/green"
+                android:textSize="24sp"
+                android:textStyle="normal" />
+        </LinearLayout>
 
         <!--
             app:mtf_animationDuration="1000"

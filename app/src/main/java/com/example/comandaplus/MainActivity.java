@@ -11,11 +11,15 @@ import android.util.Base64;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
+import com.example.comandaplus.Realm.CrudUsuarios;
+import com.example.comandaplus.Realm.UsuariosRealm;
+import com.example.comandaplus.modelo.Usuarios;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -26,6 +30,7 @@ import com.facebook.Profile;
 import com.facebook.ProfileTracker;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,7 +44,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
-public class MainActivity extends AppCompatActivity {
+import jp.wasabeef.picasso.transformations.CropCircleTransformation;
+
+    public class MainActivity extends AppCompatActivity {
     @BindView(R.id.email)
     EditText email;
     @BindView(R.id.password)
@@ -55,8 +62,9 @@ public  static final String PATH_MESSAGE="message";
     private LoginButton loginButton;
     private CallbackManager callbackManager;
     private ProfileTracker mProfileTracker;
-    String sessionusuario,sessionnombre,sessionapepat,sessionapemat;
-    @Override
+    String sessionusuario,sessionnombre,sessionapepat,sessionapemat,oooo;
+
+        @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -90,9 +98,37 @@ public  static final String PATH_MESSAGE="message";
                             sessionnombre = profile2.getName();
                             sessionapepat = profile2.getFirstName();
                             sessionapemat = profile2.getLastName();
-                            Log.d("TAG", sessionusuario);
+                           UsuariosRealm u= new UsuariosRealm();
+                           u= CrudUsuarios.buscarusuariiporidFacebook(sessionusuario);
+                          if (u!=null){
+                              UsuariosRealm i=new UsuariosRealm();
+                              i.setIdfacebook(sessionusuario);
+                              i.setNombreusuario(sessionnombre);
+                              i.setImagen(sessionusuario);
+                              i.setEstadousuario("iniciosession");
+                              i.setClaveusuario("noporahora");
+                              i.setAlmacenusuario("1");
+                              CrudUsuarios.addUsuariosRealm(i );
+
+
+                              Toast.makeText(getApplicationContext(),"Bienvenido usuario nuevo",Toast.LENGTH_LONG).show();
+                              ir();
+
+
+
+                          }else{
+
+                              ir();
+                              Toast.makeText(getApplicationContext(),"sigue disfrutando de la apalicacion",Toast.LENGTH_LONG).show();
+
+
+                          }
+
+
+
 
                         }
+
                     };
 
                 }
