@@ -10,7 +10,7 @@
         android:id="@+id/login_form"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/coloruno">
+        android:background="@drawable/radial_gradient_bkg">
 
         <LinearLayout
             android:id="@+id/email_login_form"
@@ -40,7 +40,7 @@
                 <LinearLayout
                     android:layout_width="60dp"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/blue_leftcorner_bkg"
+
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -58,8 +58,8 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="#6abcec"
+                        android:layout_height="5dp"
+                        android:background="@color/colorPrimary"
                         android:orientation="vertical"></LinearLayout>
 
                     <LinearLayout
@@ -69,8 +69,8 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
                             android:scaleType="fitCenter"
                             android:src="@drawable/passwordfinal" />
                     </LinearLayout>
@@ -79,7 +79,6 @@
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/white_rightcorner_bkg"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -97,13 +96,15 @@
                             android:ems="10"
                             android:hint="Nombre de Usuario"
                             android:inputType="textEmailAddress"
+                            android:textColor="@color/colorocho"
+                            android:textColorHint="@color/browser_actions_bg_grey"
                             android:textSize="16dp" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="fill_parent"
                         android:layout_height="5dp"
-                        android:background="#979797"
+                        android:background="@color/colorPrimary"
                         android:orientation="vertical"></LinearLayout>
 
                     <LinearLayout
@@ -121,17 +122,22 @@
                             android:ems="10"
                             android:hint="Password"
                             android:inputType="textEmailAddress"
+                            android:textColor="@color/colortres"
+                            android:textColorHint="@color/browser_actions_bg_grey"
                             android:textSize="16dp" />
                     </LinearLayout>
                 </LinearLayout>
 
             </LinearLayout>
+
             <com.facebook.login.widget.LoginButton
                 android:id="@+id/login_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                />
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/btn_orange_2" />
 
             <Button
                 android:id="@+id/email_sign_in_button3"
@@ -143,10 +149,8 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="5dp"
                 android:background="@drawable/blue_btn_bkg"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:text="@string/action_sign_in"
-                android:textColor="#fff"
+                android:text="Ingresar"
+                android:textColor="@color/colorPrimary"
                 android:textStyle="bold" />
 
             <LinearLayout
@@ -160,7 +164,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Peru -"
-                    android:textColor="#80ffffff"
+                    android:textColor="@color/browser_actions_bg_grey"
                     android:textSize="12dp" />
 
                 <TextView

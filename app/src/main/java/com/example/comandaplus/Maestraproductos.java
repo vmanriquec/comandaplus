@@ -2,9 +2,10 @@ package com.example.comandaplus;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -18,15 +19,16 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cocosw.bottomsheet.BottomSheet;
 import com.example.comandaplus.Realm.CrudUsuarios;
 import com.example.comandaplus.Realm.Crudetallepedido;
 import com.example.comandaplus.Realm.Detallepedidorealm;
+import com.example.comandaplus.Realm.ProductoRealm;
 import com.example.comandaplus.Realm.UsuariosRealm;
 import com.example.comandaplus.adapter.Adaptadormaestraproducto;
 import com.example.comandaplus.modelo.Productos;
@@ -50,14 +52,14 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.realm.Realm;
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
-import io.realm.RealmConfiguration;
-import io.realm.RealmResults;
+
+import io.realm.Realm;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
-import static android.content.Context.MODE_PRIVATE;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
@@ -69,43 +71,51 @@ public class Maestraproductos extends Fragment implements View.OnClickListener, 
     TextView totalsoles;
     @BindView(R.id.maestraproductos)
     RecyclerView maestraproductos;
-private Detallepedidorealm detallepedidorealm;
+    @BindView(R.id.imageButton)
+    ImageButton imageButton;
+    Unbinder unbinder;
+    private Detallepedidorealm detallepedidorealm;
     private View view;
     private RecyclerView recycler;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager lManager;
     ArrayList<Productos> people = new ArrayList<>();
     private String[] strArrData = {"No Suggestions"};
-private Realm realm;
+    private Realm realm;
 
-@Override
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.layoutmaestrasproduc, container, false);
-        LocalBroadcastManager.getInstance(getContext()).registerReceiver(mMessageReceiver,new IntentFilter("custom-message"));
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(mMessageReceiver, new IntentFilter("custom-message"));
 
         recycler = (RecyclerView) view.findViewById(R.id.maestraproductos);
-totalsoles=(TextView)view.findViewById(R.id.totalsoles);
+        totalsoles = (TextView) view.findViewById(R.id.totalsoles);
         int numberOfColumns = 6;
         recycler.setHasFixedSize(true);
         lManager = new LinearLayoutManager(getActivity());
         recycler.setLayoutManager(lManager);
-realm=Realm.getDefaultInstance();
+        realm = Realm.getDefaultInstance();
 
-        new Maestraproductos.traerproductosporidalmacenidfamilia().execute("1","3");
-    ImageView toto =(ImageView) view.findViewById(R.id.imagendefacebook);
+        new traerproductosporidalmacenidfamilia().execute("1", "3");
+        ImageView toto = view.findViewById(R.id.imagendefacebook);
 
-   UsuariosRealm u =new UsuariosRealm();
-   u= CrudUsuarios.getUsuariosRealmByidusuario(0);
-
-
-    String  imgUrl = "https://graph.facebook.com/"+u.getIdfacebook()+"/picture?type=large";
-    Log.d("dato","eeeso"+u.getIdfacebook());
-    Picasso.with(getApplicationContext()) .load(imgUrl).transform(new CropCircleTransformation()).resize(120, 120)
-            .into(toto);
+        UsuariosRealm u = CrudUsuarios.getUsuariosRealmByidusuario(0);
 
 
-    return view;
+        String imgUrl = "https://graph.facebook.com/" + u.getIdfacebook() + "/picture?type=large";
+        Log.d("dato", "eeeso" + u.getIdfacebook());
+        Picasso.with(getApplicationContext()).load(imgUrl).transform(new CropCircleTransformation()).resize(50, 50)
+                .into(toto);
+
+
+        unbinder = ButterKnife.bind(this, view);
+        return view;
+    }
+    public void onDestroy() {
+        Crudetallepedido.deleteAllDetallepedidorealm();
+
+        super.onDestroy();
     }
 
 
@@ -126,6 +136,8 @@ realm=Realm.getDefaultInstance();
                 Double nuevovalormenos = Double.valueOf(ItemNamemenos);
                 if (totalsoles2 - nuevovalormenos > 0) {
                     totalsoles.setText(String.valueOf(Double.parseDouble(totalsoles.getText().toString()) - nuevovalormenos));
+                } else if (totalsoles2 - nuevovalormenos == 0) {
+                    totalsoles.setText("0");
                 }
             }
             //configview();
@@ -150,6 +162,57 @@ realm=Realm.getDefaultInstance();
     @Override
     public void onClick(View v) {
 
+    }
+
+
+    @Override
+    public void onDestroyView() {
+
+
+        super.onDestroyView();
+        unbinder.unbind();
+    }
+
+
+
+
+    @OnClick(R.id.imageButton)
+    public void onClick() {
+        List<Detallepedidorealm> ee=Crudetallepedido.getAllDetallepedidorealm();
+        String oo="";
+for (int w=0;w<ee.size();w++){
+
+
+    if(ee.get(w).getCantidadrealm()==0){
+        oo="aun no hay ningun pedido :)";
+
+    }else {
+        String l =  "         " + ee.get(w).getCantidadrealm() +"   "+ee.get(w).getNombreproductorealm()+ "\r\n";
+        oo = oo + l;
+
+
+    }
+
+
+        }
+        new BottomSheet.Builder(getActivity())
+                .title("Pedido de la mesa....")
+                .icon(R.drawable.burger)
+
+                .sheet(1, oo)
+                .listener(
+
+                        new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+
+                    case R.id.help:
+
+                        break;
+                }
+            }
+        }).show();
     }
 
     private class traerproductosporidalmacenidfamilia extends AsyncTask<String, String, String> {
@@ -284,4 +347,7 @@ realm=Realm.getDefaultInstance();
         }
 
     }
+
+
+
 }

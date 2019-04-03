@@ -79,6 +79,8 @@ public  static final String PATH_MESSAGE="message";
 
                 .build();
         Realm.setDefaultConfiguration(configuration);
+
+
         FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
         loginButton = (LoginButton) findViewById(R.id.login_button);
@@ -98,9 +100,12 @@ public  static final String PATH_MESSAGE="message";
                             sessionnombre = profile2.getName();
                             sessionapepat = profile2.getFirstName();
                             sessionapemat = profile2.getLastName();
-                           UsuariosRealm u= new UsuariosRealm();
-                           u= CrudUsuarios.buscarusuariiporidFacebook(sessionusuario);
+                           UsuariosRealm u= CrudUsuarios.buscarusuariiporidFacebook(sessionusuario);
                           if (u!=null){
+                                                            ir();
+                              Toast.makeText(getApplicationContext(),"sigue disfrutando de la apalicacion",Toast.LENGTH_LONG).show();
+
+                          }else{
                               UsuariosRealm i=new UsuariosRealm();
                               i.setIdfacebook(sessionusuario);
                               i.setNombreusuario(sessionnombre);
@@ -110,17 +115,8 @@ public  static final String PATH_MESSAGE="message";
                               i.setAlmacenusuario("1");
                               CrudUsuarios.addUsuariosRealm(i );
 
-
                               Toast.makeText(getApplicationContext(),"Bienvenido usuario nuevo",Toast.LENGTH_LONG).show();
                               ir();
-
-
-
-                          }else{
-
-                              ir();
-                              Toast.makeText(getApplicationContext(),"sigue disfrutando de la apalicacion",Toast.LENGTH_LONG).show();
-
 
                           }
 

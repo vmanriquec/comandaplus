@@ -24,21 +24,25 @@ public class CrudUsuarios {
     }
 
 
-    public final static void addUsuariosRealm(final UsuariosRealm UsuariosRealm){
+    public final static void addUsuariosRealm(final UsuariosRealm suariosRealm){
+        Log.d("TAG", "idusuarioinicio: "+suariosRealm.getIdfacebook()+suariosRealm.getNombreusuario());
+
         Realm realm = Realm.getDefaultInstance();
         realm.executeTransaction(new Realm.Transaction(){
             @Override
             public void execute(Realm realm){
                 int index = CrudUsuarios.calculateIndex();
 
-                UsuariosRealm UsuariosRealm = realm.createObject(UsuariosRealm.class, index);
+                UsuariosRealm resuariosRealm = realm.createObject(UsuariosRealm.class, index);
 
-                UsuariosRealm.setAlmacenusuario(UsuariosRealm.getAlmacenusuario());
-                UsuariosRealm.setClaveusuario(UsuariosRealm.getClaveusuario());
-                UsuariosRealm.setEstadousuario(UsuariosRealm.getEstadousuario());
-                UsuariosRealm.setImagen(UsuariosRealm.getImagen());
-                UsuariosRealm.setNombreusuario(UsuariosRealm.getNombreusuario());
-        UsuariosRealm.setIdfacebook(UsuariosRealm.getIdfacebook());
+                resuariosRealm.setAlmacenusuario(suariosRealm.getAlmacenusuario());
+                resuariosRealm.setClaveusuario(suariosRealm.getClaveusuario());
+                resuariosRealm.setEstadousuario(suariosRealm.getEstadousuario());
+                resuariosRealm.setImagen(suariosRealm.getImagen());
+                resuariosRealm.setNombreusuario(suariosRealm.getNombreusuario());
+        resuariosRealm.setIdfacebook(suariosRealm.getIdfacebook());
+                realm.insertOrUpdate(resuariosRealm);
+
             }
         });
     }
@@ -47,7 +51,7 @@ public class CrudUsuarios {
 
         RealmResults<UsuariosRealm> UsuariosRealm = realm.where(UsuariosRealm.class).findAll();
         for(UsuariosRealm ysuariosRealm: UsuariosRealm){
-            Log.d("TAG", "idusuario: " + ysuariosRealm.getIdusuario() );
+            Log.d("TAG", "idusuario: " + ysuariosRealm.getIdusuario()+ysuariosRealm.getNombreusuario()+ysuariosRealm.getIdfacebook()+ysuariosRealm.getImagen() );
 
 
         }
@@ -82,21 +86,23 @@ public class CrudUsuarios {
         UsuariosRealm UsuariosRealm = realm.where(UsuariosRealm.class).equalTo("idusuario", idusuario).findFirst();
         UsuariosRealm.setEstadousuario(estado);
         realm.insertOrUpdate(UsuariosRealm);
-        realm.commitTransaction();
+
         Log.d("TAG", "se actualiuzo estado de usuario: " + estado);
     }
 
 
 
     public final static void eliminarusuarioporidusuario(int idusuario){
+
         Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
+        UsuariosRealm profesor = realm.where(UsuariosRealm.class).equalTo("idusuario", idusuario).findFirst();
+        profesor.deleteFromRealm();
+        realm.commitTransaction();
 
-        realm.executeTransaction(realm1 -> {
-            RealmResults<UsuariosRealm> result = realm1.where(UsuariosRealm.class).equalTo("idusuario",idusuario).findAll();
-            result.deleteAllFromRealm();
-            realm.commitTransaction();
-        });
+
+
+
 
         Log.d("TAG", "se elimino pedido con id : " + String.valueOf(idusuario) );
     }

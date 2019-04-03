@@ -24,8 +24,8 @@
         app:icon_two="@drawable/burger"
         app:icon_one="@drawable/cestavacia"
         app:icon_three="@drawable/ic_tab_five"
-        app:icon_four="@drawable/ic_tab_one"
-        app:icon_five="@drawable/ic_tab_two"
+        app:icon_four="@drawable/verpedido"
+        app:icon_five="@drawable/usercomanda"
         app:text_two="Action"/>
 
 </android.support.design.widget.CoordinatorLayout>

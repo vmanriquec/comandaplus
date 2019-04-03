@@ -21,25 +21,40 @@
 
             <ImageView
                 android:id="@+id/imagendefacebook"
+                android:layout_width="56dp"
+                android:layout_height="50dp"
+                android:layout_gravity="right|center_horizontal|fill_horizontal"
+                card_view:srcCompat="@drawable/com_facebook_profile_picture_blank_square" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_horizontal|center_vertical" />
+
+            <ImageButton
+                android:id="@+id/imageButton"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_gravity="left"
-                card_view:srcCompat="@drawable/com_facebook_profile_picture_blank_square" />
+
+                android:adjustViewBounds="true"
+                android:background="@android:color/transparent"
+                android:scaleType="centerCrop"
+                card_view:srcCompat="@drawable/verpedido" />
 
             <TextView
                 android:id="@+id/totalsoles"
                 android:layout_width="70dp"
                 android:layout_height="40dp"
 
-                android:layout_centerHorizontal="false"
-                android:layout_centerVertical="false"
-                android:layout_gravity="right|center_horizontal|center_vertical"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:layout_marginLeft="5dp"
                 android:layout_marginTop="3dp"
                 android:layout_marginRight="5dp"
-                android:layout_marginBottom="5dp"
                 android:background="@drawable/fondototalsoles"
-                android:paddingLeft="10dp"
-                android:text="000"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="00"
                 android:textColor="@color/green"
                 android:textSize="24sp"
                 android:textStyle="normal" />

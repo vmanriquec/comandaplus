@@ -1,5 +1,7 @@
 package com.example.comandaplus.Realm;
 import android.util.Log;
+import android.widget.Toast;
+
 import java.util.List;
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -21,22 +23,22 @@ public final static void  Disminuirdetalle (final Detallepedidorealm Detallepedi
         Realm y=Realm.getDefaultInstance();
         Detallepedidorealm miobjeto=y.where(Detallepedidorealm.class).equalTo("idproductorealm", Detallepedidorealm.getIdproductorealm()).findFirst();
         if  (y!=null){
-            y.beginTransaction();
+
             int anterior =miobjeto.getCantidadrealm();
-            if (anterior==0){
-
-
-
+            if (anterior==0) {
             }else{
 
+                y.beginTransaction();
                 miobjeto.setCantidadrealm(anterior-1);
                    miobjeto.setSubtotal(miobjeto.getSubtotal()-miobjeto.getPrecventarealm());
                 y.insertOrUpdate(miobjeto);
                 y.commitTransaction();
-
             }
 
 
+        }else{
+
+            Log.d("dato","no hay mas a disminuir ");
         }
 
 
@@ -142,9 +144,12 @@ getAllDetallepedidorealm();
     public final static void deleteAllDetallepedidorealm(){
         Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
-        RealmResults<Detallepedidorealm> Detallepedidorealms = realm.where(Detallepedidorealm.class).findAll();
-        realm.deleteAll();
+        realm.delete(Detallepedidorealm.class);
+        //realm.deleteAll();
         realm.commitTransaction();
+
+        //realm.deleteAll();
+        //realm.commitTransaction();
     }
 
 

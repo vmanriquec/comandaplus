@@ -13,6 +13,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -103,13 +104,14 @@ public class FragmentB  extends Fragment implements View.OnClickListener, Recycl
 
 
         new FragmentB.traerproductosporidalmacenidfamilia().execute("1","3");
-        ImageView toto =(ImageView) view.findViewById(R.id.imagendefacebook);
+        ImageView toto = view.findViewById(R.id.imagendefacebook);
 
-        List<UsuariosRealm> UsuariosRealm = CrudUsuarios.getAllUsuariosRealm();
+        UsuariosRealm u = CrudUsuarios.getUsuariosRealmByidusuario(0);
 
-        String  imgUrl = "https://graph.facebook.com/"+UsuariosRealm.get(0).getIdfacebook()+"/picture?type=large";
 
-        Picasso.with(getApplicationContext()) .load(imgUrl).transform(new CropCircleTransformation()).resize(120, 120)
+        String  imgUrl = "https://graph.facebook.com/"+u.getIdfacebook()+"/picture?type=large";
+        Log.d("dato","eeeso"+u.getIdfacebook());
+        Picasso.with(getApplicationContext()) .load(imgUrl).transform(new CropCircleTransformation()).resize(50, 50)
                 .into(toto);
         return view;
     }
