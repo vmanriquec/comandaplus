@@ -77,6 +77,8 @@ public  static final String PATH_MESSAGE="message";
                 .schemaVersion(0)
                 .deleteRealmIfMigrationNeeded()
 
+
+
                 .build();
         Realm.setDefaultConfiguration(configuration);
 
@@ -102,6 +104,15 @@ public  static final String PATH_MESSAGE="message";
                             sessionapemat = profile2.getLastName();
                            UsuariosRealm u= CrudUsuarios.buscarusuariiporidFacebook(sessionusuario);
                           if (u!=null){
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
                                                             ir();
                               Toast.makeText(getApplicationContext(),"sigue disfrutando de la apalicacion",Toast.LENGTH_LONG).show();
 
